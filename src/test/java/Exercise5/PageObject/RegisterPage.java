@@ -29,4 +29,13 @@ public class RegisterPage extends BasePage{
 
         Config.driver.findElement(btnRegister).click();
     }
+
+    public String getUsername(){
+        String txtUsernameLogin = Config.driver.findElement(txtEmail).getText();
+        return txtUsernameLogin;
+    }
+    public String getPassword(){
+        String txtPasswordLogin = Config.driver.findElement(txtPassword).getText();
+        return txtPasswordLogin;
+    }
 }

@@ -40,7 +40,7 @@ public class BookTicketTest {
 
         HomePage homePage = new HomePage(driver);
         homePage.open();
-        String RailwayWindow = driver.getWindowHandle();
+        //String RailwayWindow = driver.getWindowHandle();
 
         RegisterPage registerPage = homePage.gotoTab("Register", RegisterPage.class);
         registerPage.submitRegisterForm(email, "12345678", "12345678", "12345678");
@@ -55,6 +55,9 @@ public class BookTicketTest {
     @Test
     public void TC02(){
         System.out.println("TC02 - User can book ticket from TrainTimetable");
+
+        //Login
+
 
 
     }
