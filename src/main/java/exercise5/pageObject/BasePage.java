@@ -1,6 +1,6 @@
-package Exercise5.PageObject;
+package exercise5.pageObject;
 
-import Exercise5.Base.Config;
+import exercise5.base.Config;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
@@ -9,8 +9,6 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
-
-import static Exercise5.Base.Config.driver;
 
 public class BasePage {
     public String tab = "//div[@id='menu']//li/a[span[text()='%s']]";
@@ -47,7 +45,7 @@ public class BasePage {
         }
     }
     public void waitElement(String xpath){
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(20));
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(25));
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(String.format(xpath))));
     }
 

@@ -1,9 +1,9 @@
-package Exercise5.PageObject;
+package exercise5.pageObject;
 
-import Exercise5.Base.Config;
+import exercise5.base.Config;
 import org.openqa.selenium.By;
-import static Exercise5.Base.Config.driver;
-import static Exercise5.Base.Config.email_url;
+import static exercise5.base.Config.driver;
+import static exercise5.base.Config.email_url;
 
 public class MailPage {
     public By checkbox = By.id("use-alias");

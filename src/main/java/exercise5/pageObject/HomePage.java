@@ -1,9 +1,7 @@
-package Exercise5.PageObject;
+package exercise5.pageObject;
 
-import Exercise5.Base.Config;
-import org.openqa.selenium.By;
+import exercise5.base.Config;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
 
 public class HomePage extends BasePage{
     public HomePage(WebDriver driver) {
