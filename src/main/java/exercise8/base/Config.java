@@ -1,4 +1,4 @@
-package exercise5.base;
+package exercise8.base;
 
 import org.openqa.selenium.WebDriver;
 

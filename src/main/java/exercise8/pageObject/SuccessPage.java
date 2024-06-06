@@ -1,6 +1,6 @@
-package exercise5.pageObject;
+package exercise8.pageObject;
 
-import exercise5.base.Config;
+import exercise8.base.Config;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 

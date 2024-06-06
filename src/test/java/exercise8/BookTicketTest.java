@@ -1,7 +1,7 @@
-package exercise5;
+package exercise8;
 
-import exercise5.base.Config;
-import exercise5.pageObject.*;
+import exercise8.base.Config;
+import exercise8.pageObject.*;
 import org.openqa.selenium.WindowType;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.Assert;
@@ -9,12 +9,14 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
-import static exercise5.base.Config.driver;
+import static exercise8.base.Config.driver;
 
 public class BookTicketTest {
 
     private String emailLogin;
     private String passwordLogin;
+    private String msgWelcome = "//*[@id='content']/h1[text()='Welcome to Safe Railway']";
+    private String msgSuccess = "//*[@id='content']/h1";
     @BeforeMethod
     public void beforeMethod(){
         System.out.println("Pre-condition");
@@ -84,7 +86,7 @@ public class BookTicketTest {
 
         //Book ticket from Train Timetable
         HomePage homePage = new HomePage(driver);
-        homePage.waitElement("//*[@id='content']/h1[text()='Welcome to Safe Railway']");
+        homePage.waitElement(msgWelcome);
 
         //Book ticket from Train Timetable
         homePage.gotoTab("Timetable", TrainTimetablePage.class);
@@ -100,7 +102,7 @@ public class BookTicketTest {
         bookTicketPage.selectInfor("TicketAmount","2");
         bookTicketPage.clickBookTicketButton();
 
-        bookTicketPage.waitElement("//*[@id='content']/h1");
+        bookTicketPage.waitElement(msgSuccess);
 
         SuccessPage successPage = new SuccessPage(driver);
         String actualMsg = successPage.getSuccessfulMsg();
