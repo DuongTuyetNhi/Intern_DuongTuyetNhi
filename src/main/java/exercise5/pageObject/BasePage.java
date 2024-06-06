@@ -13,19 +13,6 @@ import java.time.Duration;
 public class BasePage {
     public String tab = "//div[@id='menu']//li/a[span[text()='%s']]";
 
-//    public Object gotoTab(String tabName){
-//        By tabNameXpath = By.xpath(String.format(tab, tabName));
-//        Config.driver.findElement(tabNameXpath).click();
-//        return new Object();
-//    }
-//    public final By tabRegister = By.xpath(String.format(tab, "Register"));
-//    protected WebElement getTabRegister(){
-//        return Config.driver.findElement(tabRegister);
-//    }
-//    public RegisterPage goToRegisterPage(){
-//        this.getTabRegister().click();
-//        return new RegisterPage();
-//    }
     protected WebDriver driver;
 
     public BasePage(WebDriver driver) {

@@ -11,8 +11,6 @@ public class MailPage {
     By txtEmailConfirm = By.xpath("//table[@id='email_table']//tr[contains(@class, 'mail')]//td[contains(.,'Please confirm your account')]//span");
     By txtLinkConfirm = By.xpath("//*[@id='display_email']//a[contains(@href,'Confirm')]");
 
-
-
     public MailPage openMailPage(){
         Config.driver.get(email_url);
         return this;

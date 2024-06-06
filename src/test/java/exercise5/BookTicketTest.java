@@ -4,6 +4,7 @@ import exercise5.base.Config;
 import exercise5.pageObject.*;
 import org.openqa.selenium.WindowType;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
@@ -57,7 +58,15 @@ public class BookTicketTest {
         driver.navigate().refresh();
 
         mailPage.confirmAccount();
+
         driver.switchTo().window(RailwayWindow);
+
+        try {
+            Thread.sleep(5000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+
     }
 
     @Test
@@ -73,12 +82,33 @@ public class BookTicketTest {
         LoginPage loginPage = new LoginPage(driver);
         loginPage.submitLoginForm(emailLogin, passwordLogin);
 
-        System.out.println("u: " + emailLogin + "   p: " + passwordLogin);
+        //Book ticket from Train Timetable
+        HomePage homePage = new HomePage(driver);
+        homePage.waitElement("//*[@id='content']/h1[text()='Welcome to Safe Railway']");
 
         //Book ticket from Train Timetable
-//        basePage.gotoTab("Timetable", TrainTimetablePage.class);
-//
-//        TrainTimetablePage trainTimetablePage = new TrainTimetablePage(driver);
-//        trainTimetablePage.selectTicketToBook("Sài Gòn", "Đà Nẵng");
+        homePage.gotoTab("Timetable", TrainTimetablePage.class);
+
+        TrainTimetablePage trainTimetablePage = new TrainTimetablePage(driver);
+        trainTimetablePage.selectTicketToCheck("Sài Gòn", "Đà Nẵng");
+
+        TicketPricePage ticketPricePage = new TicketPricePage(driver);
+        ticketPricePage.selectSeatType("Soft seat");
+
+        BookTicketPage bookTicketPage = new BookTicketPage(driver);
+        bookTicketPage.selectInfor("Date","6/13/2024");
+        bookTicketPage.selectInfor("TicketAmount","2");
+        bookTicketPage.clickBookTicketButton();
+
+        bookTicketPage.waitElement("//*[@id='content']/h1");
+
+        SuccessPage successPage = new SuccessPage(driver);
+        String actualMsg = successPage.getSuccessfulMsg();
+        String expectedMsg = "Ticket booked successfully!";
+        Assert.assertEquals(actualMsg,expectedMsg,"Fail");
+
+        boolean check = successPage.checkInforTicket("Sài Gòn", "Đà Nẵng","Soft seat", "6/13/2024", "2");
+        Assert.assertTrue(check);
     }
+
 }

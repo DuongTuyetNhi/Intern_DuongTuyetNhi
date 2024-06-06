@@ -2,9 +2,7 @@ package exercise5.pageObject;
 
 import exercise5.base.Config;
 import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
 
 public class RegisterPage extends BasePage{
     public final By txtEmail = By.id("email");
@@ -21,13 +19,6 @@ public class RegisterPage extends BasePage{
         Config.driver.findElement(txtPassword).sendKeys(password);
         Config.driver.findElement(txtConfirmPassword).sendKeys(confirmPassword);
         Config.driver.findElement(txtPID).sendKeys(pid);
-
-//        JavascriptExecutor js = (JavascriptExecutor) Config.driver;
-//        WebElement Element = Config.driver.findElement(By.xpath("//input[@type='submit']"));
-//
-//        js.executeScript("arguments[0].scrollIntoView();", Element);
-//
-//        Config.driver.findElement(btnRegister).click();
     }
 
     public String getUsername(){
@@ -39,30 +30,8 @@ public class RegisterPage extends BasePage{
         return txtPasswordLogin;
     }
 
-
-//    public String submitRegisterForm(String email, String password, String confirmPassword, String pid){
-//        Config.driver.findElement(txtEmail).sendKeys(email);
-//        String txtUsernameLogin = Config.driver.findElement(txtEmail).getText();
-//        Config.driver.findElement(txtPassword).sendKeys(password);
-//        String txtPasswordLogin = Config.driver.findElement(txtPassword).getText();
-//        Config.driver.findElement(txtConfirmPassword).sendKeys(confirmPassword);
-//        Config.driver.findElement(txtPID).sendKeys(pid);
-//
-//        JavascriptExecutor js = (JavascriptExecutor) Config.driver;
-//        WebElement Element = Config.driver.findElement(By.xpath("//input[@type='submit']"));
-//
-//        js.executeScript("arguments[0].scrollIntoView();", Element);
-//
-//        Config.driver.findElement(btnRegister).click();
-//        return txtUsernameLogin + txtPasswordLogin;
-//    }
-
     public void clickBtnRegister(){
-        JavascriptExecutor js = (JavascriptExecutor) Config.driver;
-        WebElement Element = Config.driver.findElement(By.xpath("//input[@type='submit']"));
-
-        js.executeScript("arguments[0].scrollIntoView();", Element);
-
+        scrollToFindElement("//input[@type='submit']");
         Config.driver.findElement(btnRegister).click();
     }
 }
