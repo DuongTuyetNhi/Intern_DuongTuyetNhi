@@ -1,15 +1,15 @@
 package exercise8;
 
-import exercise8.base.Config;
-import exercise8.pageObject.*;
+import base.Constants;
 import org.openqa.selenium.WindowType;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+import pageObject.*;
 
-import static exercise8.base.Config.driver;
+import static base.DriverManagement.driver;
 
 public class BookTicketTest {
 
@@ -20,14 +20,14 @@ public class BookTicketTest {
     @BeforeMethod
     public void beforeMethod(){
         System.out.println("Pre-condition");
-        Config.driver = new ChromeDriver();
-        Config.driver.manage().window().maximize();
+        driver = new ChromeDriver();
+        driver.manage().window().maximize();
     }
 
     @AfterMethod
     public void afterMethod(){
         System.out.println("Post-condition");
-        Config.driver.quit();
+        driver.quit();
     }
 
     @Test
@@ -39,24 +39,23 @@ public class BookTicketTest {
         String email = mailPage.getEmail();
         String MailWindow = driver.getWindowHandle();
 
-        Config.driver.switchTo().newWindow(WindowType.TAB);
+        driver.switchTo().newWindow(WindowType.TAB);
 
-        HomePage homePage = new HomePage(driver);
+        HomePage homePage = new HomePage();
         homePage.open();
         String RailwayWindow = driver.getWindowHandle();
 
         String password = "12345678";
         String pid = "12345678";
 
-        RegisterPage registerPage = homePage.gotoTab("Register", RegisterPage.class);
-        registerPage.submitRegisterForm(email, password, password, pid);
+        homePage.gotoTab("Register");
+        RegisterPage registerPage = new RegisterPage();
+        registerPage.fillRegisterForm(email, password, password, pid);
         emailLogin = registerPage.getUsername();
         passwordLogin = registerPage.getPassword();
 
-        System.out.println("user: " + registerPage.getUsername());
-        System.out.println("pass: " + registerPage.getPassword());
         registerPage.clickBtnRegister();
-        Config.driver.switchTo().window(MailWindow);
+        driver.switchTo().window(MailWindow);
         driver.navigate().refresh();
 
         mailPage.confirmAccount();
@@ -78,33 +77,33 @@ public class BookTicketTest {
 
         //Login
 
-        BasePage basePage = new BasePage(driver);
-        basePage.gotoTab("Login", LoginPage.class);
+        BasePage basePage = new BasePage();
+        basePage.gotoTab("Login");
 
-        LoginPage loginPage = new LoginPage(driver);
+        LoginPage loginPage = new LoginPage();
         loginPage.submitLoginForm(emailLogin, passwordLogin);
 
         //Book ticket from Train Timetable
-        HomePage homePage = new HomePage(driver);
+        HomePage homePage = new HomePage();
         homePage.waitElement(msgWelcome);
 
         //Book ticket from Train Timetable
-        homePage.gotoTab("Timetable", TrainTimetablePage.class);
+        homePage.gotoTab("Timetable");
 
-        TrainTimetablePage trainTimetablePage = new TrainTimetablePage(driver);
+        TrainTimetablePage trainTimetablePage = new TrainTimetablePage();
         trainTimetablePage.selectTicketToCheck("Sài Gòn", "Đà Nẵng");
 
-        TicketPricePage ticketPricePage = new TicketPricePage(driver);
+        TicketPricePage ticketPricePage = new TicketPricePage();
         ticketPricePage.selectSeatType("Soft seat");
 
-        BookTicketPage bookTicketPage = new BookTicketPage(driver);
+        BookTicketPage bookTicketPage = new BookTicketPage();
         bookTicketPage.selectInfor("Date","6/13/2024");
         bookTicketPage.selectInfor("TicketAmount","2");
         bookTicketPage.clickBookTicketButton();
 
         bookTicketPage.waitElement(msgSuccess);
 
-        SuccessPage successPage = new SuccessPage(driver);
+        SuccessPage successPage = new SuccessPage();
         String actualMsg = successPage.getSuccessfulMsg();
         String expectedMsg = "Ticket booked successfully!";
         Assert.assertEquals(actualMsg,expectedMsg,"Fail");

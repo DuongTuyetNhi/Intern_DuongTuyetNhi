@@ -1,9 +1,9 @@
-package exercise8.pageObject;
+package pageObject;
 
-import exercise8.base.Config;
+import base.Constants;
 import org.openqa.selenium.By;
-import static exercise8.base.Config.driver;
-import static exercise8.base.Config.email_url;
+import static base.Constants.email_url;
+import static base.DriverManagement.driver;
 
 public class MailPage {
     public By checkbox = By.id("use-alias");
@@ -12,18 +12,18 @@ public class MailPage {
     By txtLinkConfirm = By.xpath("//*[@id='display_email']//a[contains(@href,'Confirm')]");
 
     public MailPage openMailPage(){
-        Config.driver.get(email_url);
+        driver.get(email_url);
         return this;
     }
 
     public String getEmail(){
-        Config.driver.findElement(checkbox).click();
-        String email = Config.driver.findElement(registerEmail).getText();
+        driver.findElement(checkbox).click();
+        String email = driver.findElement(registerEmail).getText();
         return email;
     }
 
     public void confirmAccount(){
-        BasePage basePage = new BasePage(driver);
+        BasePage basePage = new BasePage();
         basePage.waitElement("//table[@id='email_table']//tr[contains(@class, 'mail')]//td[contains(.,'Please confirm your account')]//span");
         driver.findElement(txtEmailConfirm).click();
 

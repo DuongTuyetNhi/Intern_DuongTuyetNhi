@@ -1,6 +1,5 @@
 package exercise5;
 
-import exercise8.base.Config;
 import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
