@@ -1,20 +1,24 @@
-package exercise8.pageObject;
+package pageObject;
 
-import exercise8.base.Config;
+import base.Constants;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
+import java.time.format.DateTimeFormatter;
+
+import static base.DriverManagement.driver;
+
 public class BookTicketPage extends BasePage{
-    public BookTicketPage(WebDriver driver){
-        super(driver);
-    }
+//    public BookTicketPage(WebDriver driver){
+//        super(driver);
+//    }
 
     String infor = "//*[@id='content']//select[@name='%s']";
     By btnBookTicket = By.xpath("//form//input[@type = 'submit']");
 
     public void selectInfor(String item, String information){
         By selectItem = By.xpath(String.format(infor, item));
-        Config.driver.findElement(selectItem).sendKeys(information);
+        driver.findElement(selectItem).sendKeys(information);
     }
 
     public void bookTicket(String departDate, String departFrom, String arriveAt, String seatType, String ticketAmount){
@@ -23,12 +27,12 @@ public class BookTicketPage extends BasePage{
         selectInfor("ArriveStation", arriveAt);
         selectInfor("SeatType", seatType);
         selectInfor("TicketAmount", ticketAmount);
-        Config.driver.findElement(btnBookTicket).click();
+
     }
 
     public void clickBookTicketButton(){
         scrollToFindElement("//form//input[@type = 'submit']");
-        Config.driver.findElement(btnBookTicket).click();
+        driver.findElement(btnBookTicket).click();
     }
 
 }
