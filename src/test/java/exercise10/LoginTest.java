@@ -8,7 +8,6 @@ import org.testng.annotations.Test;
 
 import static base.DriverManagement.driver;
 
-
 public class LoginTest extends BaseTest {
 
     @Test(description = "User can log into Railway with valid username and password")
@@ -17,7 +16,10 @@ public class LoginTest extends BaseTest {
         homePage.gotoTab("Login");
         LoginPage loginPage = new LoginPage();
         loginPage.submitLoginForm(username, password);
-        Assert.assertTrue(homePage.checkWelcomeMsg("Welcome to Safe Railway"));
+
+        String actualMsg = homePage.getWelcomeMsg();
+        String expected = "Welcome " + username;
+        Assert.assertEquals(actualMsg, expected, "The welcome message is not the same as expected.");
     }
 
     @Test(description = "User cannot login with blank Username textbox")
@@ -28,7 +30,7 @@ public class LoginTest extends BaseTest {
         String expectedMsg = "There was a problem with your login and/or errors exist in your form.";
         String actualMsg = loginPage.getErrorMsg();
 
-        Assert.assertEquals(actualMsg, expectedMsg, "Failed");
+        Assert.assertEquals(actualMsg, expectedMsg, "The error message is not the same as expected.");
     }
 
     @Test(description = "User cannot log into Railway with invalid password")
@@ -39,20 +41,22 @@ public class LoginTest extends BaseTest {
         String actualMsg = loginPage.getErrorMsg();
         String expectedMsg = "There was a problem with your login and/or errors exist in your form.";
 
-        Assert.assertEquals(actualMsg, expectedMsg, "Failed");
+        Assert.assertEquals(actualMsg, expectedMsg, "The error message is not the same as expected.");
     }
 
     @Test(description = "System shows message when user enters wrong password many times")
     public void TC04(){
         homePage.open();
         homePage.gotoTab("Login");
+
         for(int i=0; i<=3; i++){
             loginPage.submitLoginForm(username, "11111111");
         }
+
         String actualMsg = loginPage.getErrorMsg();
         String expectedMsg = "You have used 4 out of 5 login attempts. After all 5 have been used, you will be unable to login for 15 minutes.";
 
-        Assert.assertEquals(actualMsg, expectedMsg, "Failed");
+        Assert.assertEquals(actualMsg, expectedMsg, "The error message is not the same as expected.");
     }
 
     @Test(description = "User cannot login with an account hasn't been activated")
@@ -72,7 +76,7 @@ public class LoginTest extends BaseTest {
 
         String actualMsg = loginPage.getErrorMsg();
         String expectedMsg = "Invalid username or password. Please try again.";
-        Assert.assertEquals(actualMsg, expectedMsg, "Failed");
+        Assert.assertEquals(actualMsg, expectedMsg, "The error message is not the same as expected.");
     }
 
 

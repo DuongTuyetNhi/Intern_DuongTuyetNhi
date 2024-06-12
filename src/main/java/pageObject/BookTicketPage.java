@@ -1,18 +1,10 @@
 package pageObject;
 
-import base.Constants;
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-
-import java.time.format.DateTimeFormatter;
 
 import static base.DriverManagement.driver;
 
 public class BookTicketPage extends BasePage{
-//    public BookTicketPage(WebDriver driver){
-//        super(driver);
-//    }
-
     String infor = "//*[@id='content']//select[@name='%s']";
     By btnBookTicket = By.xpath("//form//input[@type = 'submit']");
 
