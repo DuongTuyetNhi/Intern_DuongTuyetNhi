@@ -1,19 +1,19 @@
 <!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
 <suite name="Railway" verbose="1" >
-<!--    <test name="BookTicket">-->
-<!--        <classes>-->
-<!--            <class name="exercise8.BookTicketTest"/>-->
-<!--        </classes>-->
-<!--    </test>-->
-
-    <test name="BookTicket" preserve-order="false">
+    <test name="BookTicket">
         <classes>
-            <class name="exercise8.BookTicketTest">
-                <methods>
-                    <include name="TC02"/>
-<!--                    <include name="TC01"/>-->
-                </methods>
-            </class>
+            <class name="exercise10.BookTicketTest"/>
         </classes>
     </test>
+
+<!--    <test name="BookTicket" preserve-order="false">-->
+<!--        <classes>-->
+<!--            <class name="exercise8.BookTicketTest">-->
+<!--                <methods>-->
+<!--                    <include name="TC02"/>-->
+<!--&lt;!&ndash;                    <include name="TC01"/>&ndash;&gt;-->
+<!--                </methods>-->
+<!--            </class>-->
+<!--        </classes>-->
+<!--    </test>-->
 </suite>

@@ -3,8 +3,7 @@ package exercise10;
 import BaseTest.BaseTest;
 import org.testng.Assert;
 import org.testng.annotations.Test;
-
-import java.time.LocalDate;
+import org.testng.asserts.SoftAssert;
 
 public class BookTicketTest extends BaseTest {
 
@@ -21,7 +20,7 @@ public class BookTicketTest extends BaseTest {
 
         String actualMsg = successPage.getSuccessfulMsg();
         String expectedMsg = "Ticket booked successfully!";
-        Assert.assertEquals(actualMsg, expectedMsg, "Message display is not same");
+        Assert.assertEquals(actualMsg, expectedMsg, "The actual message is not the same as expected.");
         Assert.assertTrue(successPage.checkInforTicket("Nha Trang", "Huế","Soft bed with air conditioner",dateNext12, "2"));
     }
 
@@ -51,11 +50,55 @@ public class BookTicketTest extends BaseTest {
         homePage.gotoTab("Timetable");
         trainTimetablePage.selectTicketToCheck("Đà Nẵng", "Sài Gòn");
 
-        Assert.assertTrue(ticketPricePage.checkTitleExist());
+        SoftAssert softAssert = new SoftAssert();
+
+        softAssert.assertTrue(ticketPricePage.checkTitleExist());
 
         String actualMsg = ticketPricePage.getTicketInfor();
         String expectedMsg = "Ticket price from Đà Nẵng to Sài Gòn";
-        Assert.assertEquals(actualMsg, expectedMsg, "Ticket table shows displays incorrectly");
+        softAssert.assertEquals(actualMsg, expectedMsg, "The ticket table displays incorrectly.");
 
+        String actualPriceOfHS = ticketPricePage.getPriceBySeatType("HS");
+        String actualPriceOfSS = ticketPricePage.getPriceBySeatType("SS");
+        String actualPriceOfSSC = ticketPricePage.getPriceBySeatType("SSC");
+        String actualPriceOfHB = ticketPricePage.getPriceBySeatType("HB");
+        String actualPriceOfSB = ticketPricePage.getPriceBySeatType("SB");
+        String actualPriceOfSBC = ticketPricePage.getPriceBySeatType("SBC");
+
+        String expectedPriceOfHS = "310000";
+        String expectedPriceOfSS = "335000";
+        String expectedPriceOfSSC = "360000";
+        String expectedPriceOfHB = "410000";
+        String expectedPriceOfSB = "460000";
+        String expectedPriceOfSBC = "510000";
+
+        softAssert.assertEquals(actualPriceOfHS, expectedPriceOfHS,"The price of HS is not the same as expected.");
+        softAssert.assertEquals(actualPriceOfSS, expectedPriceOfSS,"The price of SS is not the same as expected.");
+        softAssert.assertEquals(actualPriceOfSSC, expectedPriceOfSSC,"The price of SSC is not the same as expected.");
+        softAssert.assertEquals(actualPriceOfHB, expectedPriceOfHB,"The price of HB is not the same as expected.");
+        softAssert.assertEquals(actualPriceOfSB, expectedPriceOfSB,"The price of SB is not the same as expected.");
+        softAssert.assertEquals(actualPriceOfSBC, expectedPriceOfSBC,"The price of SBC is not the same as expected.");
+
+        softAssert.assertAll();
+    }
+
+    @Test(description = "User can book ticket from Timetable")
+    public void TC15(){
+        homePage.open();
+        homePage.gotoTab("Login");
+        loginPage.submitLoginForm(username, password);
+
+        homePage.gotoTab("Timetable");
+        trainTimetablePage.selectTicketToBook("Quảng Ngãi", "Huế");
+
+        String dateNext10 = getDateAdd(10);
+        bookTicketPage.selectInfor("Date",dateNext10);
+        bookTicketPage.selectInfor("TicketAmount", "5");
+        bookTicketPage.clickBookTicketButton();
+
+        String actualMsg = successPage.getSuccessfulMsg();
+        String expectedMsg = "Ticket booked successfully!";
+        Assert.assertEquals(actualMsg,expectedMsg,"Fail");
+        Assert.assertTrue(successPage.checkInforTicket("Quảng Ngãi", "Huế",seatType, dateNext10, "5"));
     }
 }

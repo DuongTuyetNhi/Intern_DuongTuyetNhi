@@ -7,8 +7,6 @@ import pageObject.HomePage;
 import pageObject.LoginPage;
 import org.testng.annotations.Test;
 
-import static base.DriverManagement.driver;
-
 public class Logout extends BaseTest {
 
     @Test(description = "User is redirected to Home page after logging out")
@@ -22,6 +20,7 @@ public class Logout extends BaseTest {
         homePage.gotoTab("Log out");
 
         try {
+            Assert.assertTrue(homePage.checkHomepageIsDisplay());
             homePage.checkLogoutTab();
             Assert.fail("Logout tab is exists");
         } catch (NoSuchElementException e) {

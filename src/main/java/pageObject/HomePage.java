@@ -2,7 +2,6 @@ package pageObject;
 
 import base.Constants;
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
 
 import static base.DriverManagement.driver;
 
@@ -13,12 +12,17 @@ public class HomePage extends BasePage{
     }
 
     String xpathWelcomeMsg = "//*[@id='content']/h1[text()='%s']";
-
+    By msgWelcome = By.xpath("//*[@id='banner']/div[@class='account']/strong");
     By linkCreateAccount = By.xpath("//*[@id='content']//a[contains(@href,'Register')]");
 
-    public boolean checkWelcomeMsg(String expectedMsg){
-        By msgWelcome = By.xpath(String.format(xpathWelcomeMsg,expectedMsg));
-        return driver.findElement(msgWelcome).isDisplayed();
+    public String getWelcomeMsg(){
+        return driver.findElement(msgWelcome).getText();
+    }
+
+    public boolean checkHomepageIsDisplay(){
+        String welcomeTitle = "Welcome to Safe Railway";
+        By welcome = By.xpath(String.format(xpathWelcomeMsg, welcomeTitle));
+        return driver.findElement(welcome).isDisplayed();
     }
 
     public void clickCreateAnAccountLink(){

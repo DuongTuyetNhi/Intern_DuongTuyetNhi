@@ -4,6 +4,9 @@ import BaseTest.BaseTest;
 import org.openqa.selenium.WindowType;
 import org.testng.Assert;
 import org.testng.annotations.Test;
+import org.testng.asserts.SoftAssert;
+
+import java.util.Set;
 
 import static base.DriverManagement.driver;
 
@@ -19,7 +22,7 @@ public class RegisterTest extends BaseTest {
         String actualMsg = registerPage.getErrorMsg();
         String expectedMsg = "This email address is already in use.";
 
-        Assert.assertEquals(actualMsg, expectedMsg, "Error message is not same");
+        Assert.assertEquals(actualMsg, expectedMsg, "The actual message is not the same as expected.");
     }
 
     @Test(description = "User cannot create account while password and PID fields are empty")
@@ -29,23 +32,25 @@ public class RegisterTest extends BaseTest {
         registerPage.fillRegisterForm("helloselenium@gmail.com", "","","");
         registerPage.clickBtnRegister();
 
+        SoftAssert softAssert = new SoftAssert();
+
         String actualMsg = registerPage.getErrorMsg();
         String expectedMsg = "There're errors in the form. Please correct the errors and try again.";
-
-        Assert.assertEquals(actualMsg, expectedMsg, "Error message is not same");
+        softAssert.assertEquals(actualMsg, expectedMsg, "The error message is not the same as expected.");
 
         String passwordActualMsg = registerPage.getValidationPasswordError();
         String passwordExpectedMsg = "Invalid password length.";
-        Assert.assertEquals(passwordActualMsg, passwordExpectedMsg, "Password error message is not same");
+        softAssert.assertEquals(passwordActualMsg, passwordExpectedMsg, "The password error message is not the same as expected.");
 
         String pidActualMsg = registerPage.getValidationPIDError();
         String pidExpectedMsg = "Invalid ID length.";
-        Assert.assertEquals(pidActualMsg, pidExpectedMsg, "PID error message is not same");
+        softAssert.assertEquals(pidActualMsg, pidExpectedMsg, "The PID error message is not the same as expected.");
+
+        softAssert.assertAll();
     }
 
     @Test(description = "User create and active account")
     public void TC09(){
-        //not finished
         mailPage.openMailPage();
         String mail = mailPage.getEmail();
         String MailWindow = driver.getWindowHandle();
@@ -64,17 +69,17 @@ public class RegisterTest extends BaseTest {
         driver.navigate().refresh();
 
         mailPage.confirmAccount();
-        //driver.switchTo().window(RailwayWindow);
-        try {
-            Thread.sleep(5000);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
+
+        Set<String> allTabs = driver.getWindowHandles();
+
+        for (String tab : allTabs) {
+            if (!tab.equals(MailWindow) && !tab.equals(RailwayWindow)) {
+                driver.switchTo().window(tab);
+                break;
+            }
         }
+        pause(5000);
 
-        registerPage.checkMessageConfirmDisplay();
-        registerPage.gotoTab("Login");
-        loginPage.submitLoginForm(mail, password);
-
-
+        Assert.assertTrue(registerPage.checkMessageConfirmDisplay());
     }
 }
