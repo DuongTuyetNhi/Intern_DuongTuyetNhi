@@ -1,19 +1,14 @@
 package pageObject;
 
-import base.Constants;
 import org.openqa.selenium.By;
 
+import static base.DriverManagement.click;
 import static base.DriverManagement.driver;
 
 public class HomePage extends BasePage{
-    public HomePage open(){
-        driver.get(Constants.railway_url);
-        return this;
-    }
-
-    String xpathWelcomeMsg = "//*[@id='content']/h1[text()='%s']";
-    By msgWelcome = By.xpath("//*[@id='banner']/div[@class='account']/strong");
-    By linkCreateAccount = By.xpath("//*[@id='content']//a[contains(@href,'Register')]");
+    private String xpathWelcomeMsg = "//*[@id='content']/h1[text()='%s']";
+    private By msgWelcome = By.xpath("//*[@id='banner']/div[@class='account']/strong");
+    private By linkCreateAccount = By.xpath("//*[@id='content']//a[contains(@href,'Register')]");
 
     public String getWelcomeMsg(){
         return driver.findElement(msgWelcome).getText();
@@ -26,6 +21,6 @@ public class HomePage extends BasePage{
     }
 
     public void clickCreateAnAccountLink(){
-        driver.findElement(linkCreateAccount).click();
+        click(linkCreateAccount);
     }
 }

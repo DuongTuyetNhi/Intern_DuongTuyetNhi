@@ -2,17 +2,17 @@ package pageObject;
 
 import org.openqa.selenium.By;
 
-import static base.DriverManagement.driver;
+import static base.DriverManagement.*;
 
 public class ForgotPasswordPage extends BasePage{
-    By xpathEmail = By.id("email");
-    By btnSend = By.xpath("//input[@value='Send Instructions']");
+    private By xpathEmail = By.id("email");
+    private By btnSend = By.xpath("//input[@value='Send Instructions']");
 
     public void enterEmailAddress(String email){
-        driver.findElement(xpathEmail).sendKeys(email);
+        enter(xpathEmail, email);
     }
     public void clickSendInstructionsBtn(){
-        driver.findElement(btnSend).click();
+        click(btnSend);
     }
 
 }

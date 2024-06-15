@@ -1,30 +1,34 @@
 package pageObject;
 
-import org.openqa.selenium.Alert;
+import models.Ticket;
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+import java.time.Duration;
 
-import java.util.List;
-
+import static base.DriverManagement.click;
 import static base.DriverManagement.driver;
 
 public class MyTicketPage extends BasePage{
-    String xpathCancelBtn = "//table[@class='MyTable']//input[@value='Cancel' and @onclick='DeleteTicket(%s);']";
+    private String xpathTicket = "//table[@class='MyTable']//tr[td[text()='%s' and following-sibling::td[text()='%s'" +
+            " and following-sibling::td[text()='%s' and following-sibling::td[text()='%s' " +
+            "and following-sibling::td[text()='%s']]]]]]//input[contains(@onclick, 'Delete')]";
 
-    public void cancelTicket(String id){
-        By cancelBtn = By.xpath(String.format(xpathCancelBtn, id));
-        driver.findElement(cancelBtn).click();
+    public void cancelTicket(Ticket ticket) {
+        By ticketLocator = By.xpath(String.format(xpathTicket, ticket.getDepartFrom().getValueDepartFrom(), ticket.getArriveAt().getValueArriveAt(),
+                ticket.getSeatType().getValueSeatType(), ticket.getDepartDate(), ticket.getAmount().getValueAmount()));
+        click(ticketLocator);
     }
 
-    public void confirmCancel(){
-        Alert alert = driver.switchTo().alert();
-        alert.accept();
+    public void confirmCancel() {
+        driver.switchTo().alert().accept();
     }
 
-    public boolean checkTicketDisappear(String id){
-        By cancelBtn = By.xpath(String.format(xpathCancelBtn, id));
-        List<WebElement> tickets = driver.findElements(cancelBtn);
-        return tickets.isEmpty();
+    public boolean checkTicketDisappear(Ticket ticket) {
+        String ticketLocator = String.format(xpathTicket, ticket.getDepartFrom().getValueDepartFrom(), ticket.getArriveAt().getValueArriveAt(),
+                ticket.getSeatType().getValueSeatType(), ticket.getDepartDate(), ticket.getAmount().getValueAmount());
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        return wait.until(ExpectedConditions.invisibilityOfElementLocated(By.xpath(ticketLocator)));
     }
 
 }

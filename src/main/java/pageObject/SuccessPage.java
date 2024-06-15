@@ -1,22 +1,23 @@
 package pageObject;
 
+import models.Ticket;
 import org.openqa.selenium.By;
 
 import static base.DriverManagement.driver;
+import static base.DriverManagement.getText;
 
 public class SuccessPage extends BasePage{
-    String xpathInforTicket = "//table//tr[td[text()='%s' and following-sibling::td[text()='%s' and following-sibling::td[text()='%s' and following-sibling::td[text()='%s' and following-sibling::td[text()='%s']]]]]]";
+    private String xpathInforTicket = "//table//tr[td[text()='%s' and following-sibling::td[text()='%s' and following-sibling::td[text()='%s' and following-sibling::td[text()='%s' and following-sibling::td[text()='%s']]]]]]";
 
     public String getSuccessfulMsg(){
         By msgSuccessful = By.xpath("//*[@id='content']/h1");
-        String actualMsg = driver.findElement(msgSuccessful).getText();
-        return actualMsg;
+        return getText(msgSuccessful);
     }
 
-    public boolean checkInforTicket(String departFrom, String arriveAt, String seatType, String departDate, String amountTicket){
-        By inforTicket = By.xpath(String.format(xpathInforTicket, departFrom, arriveAt, seatType, departDate, amountTicket));
-        boolean i = driver.findElement(inforTicket).isDisplayed();
-        return i;
+    public boolean checkInforTicket(Ticket ticket){
+        By inforTicket = By.xpath(String.format(xpathInforTicket, ticket.getDepartFrom().getValueDepartFrom(), ticket.getArriveAt().getValueArriveAt(),
+                ticket.getSeatType().getValueSeatType(), ticket.getDepartDate(), ticket.getAmount().getValueAmount()));
+        return driver.findElement(inforTicket).isDisplayed();
     }
 
     public String getTicketId(){

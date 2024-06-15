@@ -1,30 +1,38 @@
 package exercise10;
 
 import BaseTest.BaseTest;
+import base.DriverManagement;
+import models.User;
 import org.openqa.selenium.NoSuchElementException;
 import org.testng.Assert;
 import pageObject.HomePage;
 import pageObject.LoginPage;
 import org.testng.annotations.Test;
 
-public class Logout extends BaseTest {
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
+public class Logout extends BaseTest {
+    protected String username = "nhiagest@grr.la";
+    protected String password = "12345678";
+    User validUser = new User(username, password);
     @Test(description = "User is redirected to Home page after logging out")
-    public void TC06(){
+    public void LogOut(){
 
         HomePage homePage = new HomePage();
-        homePage.open();
+        DriverManagement.open();
         homePage.gotoTab("Login");
         LoginPage loginPage = new LoginPage();
-        loginPage.submitLoginForm(username, password);
+        loginPage.submitLoginForm(validUser);
         homePage.gotoTab("Log out");
 
-        try {
-            Assert.assertTrue(homePage.checkHomepageIsDisplay());
-            homePage.checkLogoutTab();
-            Assert.fail("Logout tab is exists");
-        } catch (NoSuchElementException e) {
-            Assert.assertTrue(e instanceof NoSuchElementException);
+        Assert.assertTrue(homePage.checkHomepageIsDisplay());
+        Assert.assertFalse(homePage.isLogoutTabPresent(), "Logout tab is exist");
+
+        if (homePage.isLogoutTabPresent()) {
+            Assert.fail("Logout tab exists");
+        } else {
+            Assert.assertTrue(true, "Logout tab does not exist as expected");
         }
     }
 }

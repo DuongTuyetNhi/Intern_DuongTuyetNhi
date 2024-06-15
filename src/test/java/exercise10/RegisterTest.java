@@ -1,22 +1,36 @@
 package exercise10;
 
 import BaseTest.BaseTest;
+import base.DriverManagement;
+import models.User;
 import org.openqa.selenium.WindowType;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
+import pageObject.*;
 
-import java.util.Set;
+
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 import static base.DriverManagement.driver;
 
 public class RegisterTest extends BaseTest {
+    protected HomePage homePage = new HomePage();
+    protected RegisterPage registerPage = new RegisterPage();
+    protected MailPage mailPage = new MailPage();
+    protected String username = "nhiagest@grr.la";
+    protected String password = "12345678";
+    protected String pid = "12345678";
+    User oldAccountUser = new User(username, password, pid);
+    String newEmail = "helloselenium@gmail.com";
+    String blankPassword = "";
 
     @Test(description = "User cannot create account with an already in use email")
-    public void TC07(){
-        homePage.open();
+    public void RegisterWithUsedEmail(){
+        DriverManagement.open();
         homePage.gotoTab("Register");
-        registerPage.fillRegisterForm(username, password, password, pid);
+        registerPage.fillRegisterForm(oldAccountUser);
         registerPage.clickBtnRegister();
 
         String actualMsg = registerPage.getErrorMsg();
@@ -26,10 +40,11 @@ public class RegisterTest extends BaseTest {
     }
 
     @Test(description = "User cannot create account while password and PID fields are empty")
-    public void TC08(){
-        homePage.open();
+    public void RegisterWithBlankFields(){
+        DriverManagement.open();
         homePage.gotoTab("Register");
-        registerPage.fillRegisterForm("helloselenium@gmail.com", "","","");
+        User newUser = new User(newEmail, blankPassword, "");
+        registerPage.fillRegisterForm(newUser);
         registerPage.clickBtnRegister();
 
         SoftAssert softAssert = new SoftAssert();
@@ -50,18 +65,19 @@ public class RegisterTest extends BaseTest {
     }
 
     @Test(description = "User create and active account")
-    public void TC09(){
-        mailPage.openMailPage();
+    public void RegisterAccount(){
+        DriverManagement.openMailPage();
         String mail = mailPage.getEmail();
+        User newAccountUser = new User(mail, password, pid);
         String MailWindow = driver.getWindowHandle();
         driver.switchTo().newWindow(WindowType.TAB);
 
-        homePage.open();
+        DriverManagement.open();
         homePage.clickCreateAnAccountLink();
 
         String RailwayWindow = driver.getWindowHandle();
 
-        registerPage.fillRegisterForm(mail, password, password, pid);
+        registerPage.fillRegisterForm(newAccountUser);
         registerPage.clickBtnRegister();
         Assert.assertTrue(registerPage.checkMessageDisplay());
 
@@ -70,15 +86,7 @@ public class RegisterTest extends BaseTest {
 
         mailPage.confirmAccount();
 
-        Set<String> allTabs = driver.getWindowHandles();
-
-        for (String tab : allTabs) {
-            if (!tab.equals(MailWindow) && !tab.equals(RailwayWindow)) {
-                driver.switchTo().window(tab);
-                break;
-            }
-        }
-        pause(5000);
+        DriverManagement.switchToTab(MailWindow, RailwayWindow);
 
         Assert.assertTrue(registerPage.checkMessageConfirmDisplay());
     }

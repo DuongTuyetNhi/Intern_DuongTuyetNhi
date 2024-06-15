@@ -1,30 +1,32 @@
 package pageObject;
 
+import base.DriverManagement;
+import models.Ticket;
 import org.openqa.selenium.By;
 
-import static base.DriverManagement.driver;
+import static base.DriverManagement.*;
 
 public class BookTicketPage extends BasePage{
-    String infor = "//*[@id='content']//select[@name='%s']";
-    By btnBookTicket = By.xpath("//form//input[@type = 'submit']");
+    private String infor = "//*[@id='content']//select[@name='%s']";
+    private By btnBookTicket = By.xpath("//form//input[@type = 'submit']");
 
     public void selectInfor(String item, String information){
         By selectItem = By.xpath(String.format(infor, item));
-        driver.findElement(selectItem).sendKeys(information);
+        enter(selectItem, information);
     }
 
-    public void bookTicket(String departDate, String departFrom, String arriveAt, String seatType, String ticketAmount){
-        selectInfor("Date", departDate);
-        selectInfor("DepartStation", departFrom);
-        selectInfor("ArriveStation", arriveAt);
-        selectInfor("SeatType", seatType);
-        selectInfor("TicketAmount", ticketAmount);
+    public void bookTicket(Ticket ticket){
+        selectInfor("DepartStation", ticket.getDepartFrom().getValueDepartFrom());
+        selectInfor("Date", ticket.getDepartDate());
+        selectInfor("SeatType", ticket.getSeatType().getValueSeatType());
+        selectInfor("TicketAmount", ticket.getAmount().getValueAmount());
+        selectInfor("ArriveStation", ticket.getArriveAt().getValueArriveAt());
 
     }
 
     public void clickBookTicketButton(){
-        scrollToFindElement("//form//input[@type = 'submit']");
-        driver.findElement(btnBookTicket).click();
+        DriverManagement.scrollToFindElement("//form//input[@type = 'submit']");
+        click(btnBookTicket);
     }
 
 }
