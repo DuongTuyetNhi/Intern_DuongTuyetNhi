@@ -1,29 +1,23 @@
 package pageObject;
 
+import base.DriverManagement;
 import org.openqa.selenium.By;
-import static base.Constants.email_url;
-import static base.DriverManagement.driver;
+
+import static base.DriverManagement.*;
 
 public class MailPage extends BasePage{
-    public By checkbox = By.id("use-alias");
-    public By registerEmail = By.id("email-widget");
-    String emailReset = "//table[@id='email_table']//tr[contains(@class, 'mail')]//td[contains(.,'Please reset your password')]//span";
-    String linkReset = "//*[@id='display_email']//a[contains(@href,'PasswordReset')]";
-    By txtEmailConfirm = By.xpath("//table[@id='email_table']//tr[contains(@class, 'mail')]//td[contains(.,'Please confirm your account')]//span");
-    By txtLinkConfirm = By.xpath("//*[@id='display_email']//a[contains(@href,'Confirm')]");
-
-    By btnMail = By.xpath("//*[@id='inbox-id']");
-    By txtMailName = By.xpath("//*[@id='inbox-id']/input");
-    By btnSet = By.xpath("//*[@id='inbox-id']/button[@class='save button small']");
-    By sltDomainName = By.xpath("//select[@id='gm-host-select']");
-    By txtEmailReset = By.xpath("//table[@id='email_table']//tr[contains(@class, 'mail')]//td[contains(.,'Please reset your password')]//span");
-    By txtLinkReset = By.xpath("//*[@id='display_email']//a[contains(@href,'PasswordReset')]");
-
-
-    public MailPage openMailPage(){
-        driver.get(email_url);
-        return this;
-    }
+    private By checkbox = By.id("use-alias");
+    private By registerEmail = By.id("email-widget");
+    private String emailReset = "//table[@id='email_table']//tr[contains(@class, 'mail')]//td[contains(.,'Please reset your password')]//span";
+    private String linkReset = "//*[@id='display_email']//a[contains(@href,'PasswordReset')]";
+    private By txtEmailConfirm = By.xpath("//table[@id='email_table']//tr[contains(@class, 'mail')]//td[contains(.,'Please confirm your account')]//span");
+    private By txtLinkConfirm = By.xpath("//*[@id='display_email']//a[contains(@href,'Confirm')]");
+    private By btnMail = By.xpath("//*[@id='inbox-id']");
+    private By txtMailName = By.xpath("//*[@id='inbox-id']/input");
+    private By btnSet = By.xpath("//*[@id='inbox-id']/button[@class='save button small']");
+    private By sltDomainName = By.xpath("//select[@id='gm-host-select']");
+    private By txtEmailReset = By.xpath("//table[@id='email_table']//tr[contains(@class, 'mail')]//td[contains(.,'Please reset your password')]//span");
+    private By txtLinkReset = By.xpath("//*[@id='display_email']//a[contains(@href,'PasswordReset')]");
 
     public String getEmail(){
         driver.findElement(checkbox).click();
@@ -32,24 +26,24 @@ public class MailPage extends BasePage{
     }
 
     public void confirmAccount(){
-        waitElement("//table[@id='email_table']//tr[contains(@class, 'mail')]//td[contains(.,'Please confirm your account')]//span");
-        driver.findElement(txtEmailConfirm).click();
+        DriverManagement.waitElement("//table[@id='email_table']//tr[contains(@class, 'mail')]//td[contains(.,'Please confirm your account')]//span");
+        click(txtEmailConfirm);
 
-        waitElement("//*[@id='display_email']//a[contains(@href,'Confirm')]");
-        driver.findElement(txtLinkConfirm).click();
+        DriverManagement.waitElement("//*[@id='display_email']//a[contains(@href,'Confirm')]");
+        click(txtLinkConfirm);
     }
 
     public void loginToEmail(String mailName, String domainName){
-        driver.findElement(btnMail).click();
-        driver.findElement(txtMailName).sendKeys(mailName);
-        driver.findElement(btnSet).click();
-        driver.findElement(sltDomainName).sendKeys(domainName);
+        click(btnMail);
+        enter(txtMailName, mailName);
+        click(btnSet);
+        enter(sltDomainName, domainName);
     }
     public void resetPassword(){
-        waitElement(emailReset);
-        driver.findElement(txtEmailReset).click();
+        DriverManagement.waitElement(emailReset);
+        click(txtEmailReset);
 
-        waitElement(linkReset);
-        driver.findElement(txtLinkReset).click();
+        DriverManagement.waitElement(linkReset);
+        click(txtLinkReset);
     }
 }

@@ -1,18 +1,30 @@
 package exercise10;
 
 import BaseTest.BaseTest;
+import base.DriverManagement;
 import org.openqa.selenium.WindowType;
 import org.testng.Assert;
 import org.testng.annotations.Test;
-import java.util.Set;
+import pageObject.*;
 
 import static base.DriverManagement.driver;
+import static base.DriverManagement.switchToTab;
 
 public class ResetPasswordTest extends BaseTest {
+    protected HomePage homePage = new HomePage();
+    protected LoginPage loginPage = new LoginPage();
+    protected MailPage mailPage = new MailPage();
+    protected ForgotPasswordPage forgotPasswordPage = new ForgotPasswordPage();
+    protected String username = "nhiagest@grr.la";
+    protected String password = "12345678";
+    String[] str = username.split("@");
+    protected String mailName = str[0];
+    protected String domainName = str[1];
+
 
     @Test(description = "Reset password shows error if the new password is same as current")
-    public void TC10(){
-        homePage.open();
+    public void ResetPasswordSameOldPassword(){
+        DriverManagement.open();
         homePage.gotoTab("Login");
         loginPage.clickForgotPassword();
         String RailwayWindow = driver.getWindowHandle();
@@ -21,19 +33,12 @@ public class ResetPasswordTest extends BaseTest {
         forgotPasswordPage.clickSendInstructionsBtn();
 
         driver.switchTo().newWindow(WindowType.TAB);
-        mailPage.openMailPage();
+        DriverManagement.openMailPage();
         String MailWindow = driver.getWindowHandle();
         mailPage.loginToEmail(mailName, domainName);
         mailPage.resetPassword();
 
-        Set<String> allTabs = driver.getWindowHandles();
-        for (String tab : allTabs) {
-            if (!tab.equals(MailWindow) && !tab.equals(RailwayWindow)) {
-                driver.switchTo().window(tab);
-                break;
-            }
-        }
-        pause(5000);
+        DriverManagement.switchToTab(MailWindow, RailwayWindow);
 
         Assert.assertTrue(loginPage.checkTokenIsDisplay());
         loginPage.fillResetPasswordForm(password, password);
@@ -45,8 +50,8 @@ public class ResetPasswordTest extends BaseTest {
     }
 
     @Test(description = "Reset password shows error if the new password and confirm password doesn't match")
-    public void TC11(){
-        homePage.open();
+    public void ResetPasswordDoesNotMatch(){
+        DriverManagement.open();
         homePage.gotoTab("Login");
         loginPage.clickForgotPassword();
         String RailwayWindow = driver.getWindowHandle();
@@ -55,19 +60,12 @@ public class ResetPasswordTest extends BaseTest {
         forgotPasswordPage.clickSendInstructionsBtn();
 
         driver.switchTo().newWindow(WindowType.TAB);
-        mailPage.openMailPage();
+        DriverManagement.openMailPage();
         String MailWindow = driver.getWindowHandle();
         mailPage.loginToEmail(mailName, domainName);
         mailPage.resetPassword();
 
-        Set<String> allTabs = driver.getWindowHandles();
-        for (String tab : allTabs) {
-            if (!tab.equals(MailWindow) && !tab.equals(RailwayWindow)) {
-                driver.switchTo().window(tab);
-                break;
-            }
-        }
-        pause(5000);
+        switchToTab(MailWindow, RailwayWindow);
 
         Assert.assertTrue(loginPage.checkTokenIsDisplay());
         loginPage.fillResetPasswordForm(password, "11111111");

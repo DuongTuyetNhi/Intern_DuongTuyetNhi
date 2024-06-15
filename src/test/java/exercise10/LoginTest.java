@@ -1,21 +1,40 @@
 package exercise10;
 
 import BaseTest.BaseTest;
-import pageObject.LoginPage;
+import base.DriverManagement;
+import models.User;
+import pageObject.*;
 import org.openqa.selenium.WindowType;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+
 import static base.DriverManagement.driver;
 
 public class LoginTest extends BaseTest {
+    protected HomePage homePage = new HomePage();
+    protected LoginPage loginPage = new LoginPage();
+    protected RegisterPage registerPage = new RegisterPage();
+    protected MailPage mailPage = new MailPage();
+
+    protected String username = "nhiagest@grr.la";
+    protected String password = "12345678";
+    protected String blankUsername = "";
+    protected String invalidPassword = "11111111";
+    protected String pid = "12345678";
+
+    User validUser = new User(username, password);
+    User blankUser = new User(blankUsername, password);
+    User invalidUser = new User(username, invalidPassword);
 
     @Test(description = "User can log into Railway with valid username and password")
-    public void TC01(){
-        homePage.open();
+    public void LoginWithValidAccount(){
+        DriverManagement.open();
         homePage.gotoTab("Login");
         LoginPage loginPage = new LoginPage();
-        loginPage.submitLoginForm(username, password);
+        loginPage.submitLoginForm(validUser);
 
         String actualMsg = homePage.getWelcomeMsg();
         String expected = "Welcome " + username;
@@ -23,10 +42,10 @@ public class LoginTest extends BaseTest {
     }
 
     @Test(description = "User cannot login with blank Username textbox")
-    public void TC02(){
-        homePage.open();
+    public void LoginWithBlankUsername(){
+        DriverManagement.open();
         homePage.gotoTab("Login");
-        loginPage.submitLoginForm("",password);
+        loginPage.submitLoginForm(blankUser);
         String expectedMsg = "There was a problem with your login and/or errors exist in your form.";
         String actualMsg = loginPage.getErrorMsg();
 
@@ -34,10 +53,10 @@ public class LoginTest extends BaseTest {
     }
 
     @Test(description = "User cannot log into Railway with invalid password")
-    public void TC03(){
-        homePage.open();
+    public void LoginWithInvalidPassword(){
+        DriverManagement.open();
         homePage.gotoTab("Login");
-        loginPage.submitLoginForm(username, "11111111");
+        loginPage.submitLoginForm(invalidUser);
         String actualMsg = loginPage.getErrorMsg();
         String expectedMsg = "There was a problem with your login and/or errors exist in your form.";
 
@@ -45,13 +64,11 @@ public class LoginTest extends BaseTest {
     }
 
     @Test(description = "System shows message when user enters wrong password many times")
-    public void TC04(){
-        homePage.open();
+    public void LoginInSeveralTimes(){
+        DriverManagement.open();
         homePage.gotoTab("Login");
 
-        for(int i=0; i<=3; i++){
-            loginPage.submitLoginForm(username, "11111111");
-        }
+        loginPage.loginInSeveralTime(invalidUser, 4);
 
         String actualMsg = loginPage.getErrorMsg();
         String expectedMsg = "You have used 4 out of 5 login attempts. After all 5 have been used, you will be unable to login for 15 minutes.";
@@ -60,19 +77,20 @@ public class LoginTest extends BaseTest {
     }
 
     @Test(description = "User cannot login with an account hasn't been activated")
-    public void TC05(){
-        mailPage.openMailPage();
+    public void LoginWithInactiveAccount(){
+        DriverManagement.openMailPage();
         String email = mailPage.getEmail();
+        User newUser = new User(email, password, pid);
 
         driver.switchTo().newWindow(WindowType.TAB);
 
-        homePage.open();
+        DriverManagement.open();
         homePage.gotoTab("Register");
-        registerPage.fillRegisterForm(email, password, password, pid);
+        registerPage.fillRegisterForm(newUser);
         registerPage.clickBtnRegister();
 
         registerPage.gotoTab("Login");
-        loginPage.submitLoginForm(email,password);
+        loginPage.submitLoginForm(newUser);
 
         String actualMsg = loginPage.getErrorMsg();
         String expectedMsg = "Invalid username or password. Please try again.";
