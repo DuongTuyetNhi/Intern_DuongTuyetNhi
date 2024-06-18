@@ -2,81 +2,70 @@ package exercise10;
 
 import BaseTest.BaseTest;
 import base.DriverManagement;
-import enums.Amount;
-import enums.ArriveAt;
-import enums.DepartFrom;
-import enums.SeatType;
+import enums.*;
 import models.*;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 import pageObject.*;
 
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
+import static base.DateUtils.getDateAdd;
 
 public class BookTicketTest extends BaseTest {
-    protected HomePage homePage = new HomePage();
-    protected LoginPage loginPage = new LoginPage();
-    protected BookTicketPage bookTicketPage = new BookTicketPage();
-    protected TrainTimetablePage trainTimetablePage = new TrainTimetablePage();
-    protected TicketPricePage ticketPricePage = new TicketPricePage();
-    protected SuccessPage successPage = new SuccessPage();
-    protected DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("M/d/yyyy");
-    protected String getDateAdd(int number){
-        return dateTimeFormatter.format((LocalDate.now()).plusDays(number));
-    }
+    HomePage homePage = new HomePage();
+    LoginPage loginPage = new LoginPage();
+    BookTicketPage bookTicketPage = new BookTicketPage();
+    TrainTimetablePage trainTimetablePage = new TrainTimetablePage();
+    TicketPricePage ticketPricePage = new TicketPricePage();
+    SuccessPage successPage = new SuccessPage();
 
-    protected String username = "nhiagest@grr.la";
-    protected String password = "12345678";
-    protected String seatType = "Hard seat";
+    String username = "nhiagest@grr.la";
+    String password = "12345678";
     User validUser = new User(username, password);
 
     @Test(description = "User can book 1 ticket at a time")
-    public void BookATicket(){
-        Ticket ticket1 = new Ticket(getDateAdd(12), DepartFrom.NHA_TRANG, ArriveAt.HUE, SeatType.SBC, Amount.TWO);
-        Ticket ticket1a = new Ticket(DepartFrom.NHA_TRANG, ArriveAt.HUE, SeatType.SBC, getDateAdd(12), Amount.TWO);
+    public void BookTicket(){
+        Ticket ticket1 = new Ticket(getDateAdd(12), Locations.NHA_TRANG, Locations.HUE, SeatType.SBC, Amount.TWO);
 
         DriverManagement.open();
-        homePage.gotoTab("Login");
+        homePage.openLoginTab();
         loginPage.submitLoginForm(validUser);
 
-        homePage.gotoTab("Book ticket");
+        homePage.openTab("Book ticket");
         bookTicketPage.bookTicket(ticket1);
         bookTicketPage.clickBookTicketButton();
 
         String actualMsg = successPage.getSuccessfulMsg();
         String expectedMsg = "Ticket booked successfully!";
         Assert.assertEquals(actualMsg, expectedMsg, "The actual message is not the same as expected.");
-        Assert.assertTrue(successPage.checkInforTicket(ticket1a));
+        Assert.assertTrue(successPage.checkInforTicket(ticket1));
     }
 
     @Test(description = "User can book many tickets at a time")
     public void BookManyTicket(){
-        Ticket ticket2 = new Ticket(getDateAdd(25), DepartFrom.NHA_TRANG, ArriveAt.SAI_GON, SeatType.SSC, Amount.FIVE);
-        Ticket ticket2a = new Ticket(DepartFrom.NHA_TRANG, ArriveAt.SAI_GON, SeatType.SSC, getDateAdd(25), Amount.FIVE);
+        Ticket ticket2 = new Ticket(getDateAdd(25), Locations.NHA_TRANG, Locations.SAI_GON, SeatType.SSC, Amount.FIVE);
         DriverManagement.open();
-        homePage.gotoTab("Login");
+        homePage.openLoginTab();
         loginPage.submitLoginForm(validUser);
 
-        homePage.gotoTab("Book ticket");
+        homePage.openTab("Book ticket");
         bookTicketPage.bookTicket(ticket2);
         bookTicketPage.clickBookTicketButton();
 
         String actualMsg = successPage.getSuccessfulMsg();
         String expectedMsg = "Ticket booked successfully!";
         Assert.assertEquals(actualMsg, expectedMsg, "Message display is not same");
-        Assert.assertTrue(successPage.checkInforTicket(ticket2a));
+        Assert.assertTrue(successPage.checkInforTicket(ticket2));
     }
 
     @Test(description = "User can check price of ticket from Timetable")
     public void CheckPriceTicket(){
         DriverManagement.open();
-        homePage.gotoTab("Login");
+        homePage.openLoginTab();
         loginPage.submitLoginForm(validUser);
 
-        homePage.gotoTab("Timetable");
-        trainTimetablePage.selectTicketToCheck("Đà Nẵng", "Sài Gòn");
+        homePage.openTab("Timetable");
+        trainTimetablePage.selectFunction("Đà Nẵng", "Sài Gòn", "TicketPricePage");
 
         SoftAssert softAssert = new SoftAssert();
 
@@ -112,14 +101,14 @@ public class BookTicketTest extends BaseTest {
 
     @Test(description = "User can book ticket from Timetable")
     public void BookTicketFromTimeTable(){
-        Ticket ticket4a = new Ticket(DepartFrom.QUANG_NGAI, ArriveAt.HUE, SeatType.HS, getDateAdd(10), Amount.FIVE);
+        Ticket ticket4 = new Ticket(getDateAdd(10), Locations.QUANG_NGAI, Locations.HUE, SeatType.HS, Amount.FIVE);
 
         DriverManagement.open();
-        homePage.gotoTab("Login");
+        homePage.openLoginTab();
         loginPage.submitLoginForm(validUser);
 
-        homePage.gotoTab("Timetable");
-        trainTimetablePage.selectTicketToBook("Quảng Ngãi", "Huế");
+        homePage.openTab("Timetable");
+        trainTimetablePage.selectFunction("Quảng Ngãi", "Huế", "BookTicketPage");
 
         String dateNext10 = getDateAdd(10);
         bookTicketPage.selectInfor("Date",dateNext10);
@@ -129,6 +118,6 @@ public class BookTicketTest extends BaseTest {
         String actualMsg = successPage.getSuccessfulMsg();
         String expectedMsg = "Ticket booked successfully!";
         Assert.assertEquals(actualMsg,expectedMsg,"Fail");
-        Assert.assertTrue(successPage.checkInforTicket(ticket4a));
+        Assert.assertTrue(successPage.checkInforTicket(ticket4));
     }
 }

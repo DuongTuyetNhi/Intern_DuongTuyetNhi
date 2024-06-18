@@ -2,10 +2,7 @@ package exercise10;
 
 import BaseTest.BaseTest;
 import base.DriverManagement;
-import enums.Amount;
-import enums.ArriveAt;
-import enums.DepartFrom;
-import enums.SeatType;
+import enums.*;
 import models.*;
 import org.testng.Assert;
 import org.testng.annotations.Test;
@@ -15,35 +12,34 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 public class CancelBookingTest extends BaseTest {
-    protected HomePage homePage = new HomePage();
-    protected LoginPage loginPage = new LoginPage();
-    protected BookTicketPage bookTicketPage = new BookTicketPage();
-    protected SuccessPage successPage = new SuccessPage();
-    protected MyTicketPage myTicketPage = new MyTicketPage();
+    HomePage homePage = new HomePage();
+    LoginPage loginPage = new LoginPage();
+    BookTicketPage bookTicketPage = new BookTicketPage();
+    SuccessPage successPage = new SuccessPage();
+    MyTicketPage myTicketPage = new MyTicketPage();
 
-    protected DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("M/d/yyyy");
-    protected String getDateAdd(int number){
+    DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("M/d/yyyy");
+    String getDateAdd(int number){
         return dateTimeFormatter.format((LocalDate.now()).plusDays(number));
     }
 
-    protected String username = "nhiagest@grr.la";
-    protected String password = "12345678";
-    protected String departDate = getDateAdd(5);
+    String username = "nhiagest@grr.la";
+    String password = "12345678";
+    String departDate = getDateAdd(5);
 
     User validUser = new User(username, password);
-    Ticket ticketBook = new Ticket(departDate, DepartFrom.SAI_GON, ArriveAt.PHAN_THIET, SeatType.HB, Amount.TWO);
-    Ticket ticket = new Ticket(DepartFrom.SAI_GON, ArriveAt.PHAN_THIET, SeatType.HB, departDate, Amount.TWO);
+    Ticket ticket = new Ticket(departDate, Locations.SAI_GON, Locations.PHAN_THIET, SeatType.HB, Amount.TWO);
     @Test(description = "User can cancel a ticket")
     public void CancelTicket(){
         DriverManagement.open();
-        homePage.gotoTab("Login");
+        homePage.openLoginTab();
         loginPage.submitLoginForm(validUser);
 
-        homePage.gotoTab("Book ticket");
-        bookTicketPage.bookTicket(ticketBook);
+        homePage.openTab("Book ticket");
+        bookTicketPage.bookTicket(ticket);
         bookTicketPage.clickBookTicketButton();
 
-        successPage.gotoTab("My ticket");
+        successPage.openTab("My ticket");
         myTicketPage.cancelTicket(ticket);
         myTicketPage.confirmCancel();
         Assert.assertTrue(myTicketPage.checkTicketDisappear(ticket),"The ticket does not disappear.");

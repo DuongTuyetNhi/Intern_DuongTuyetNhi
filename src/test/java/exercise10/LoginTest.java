@@ -8,22 +8,19 @@ import org.openqa.selenium.WindowType;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-
 import static base.DriverManagement.driver;
 
 public class LoginTest extends BaseTest {
-    protected HomePage homePage = new HomePage();
-    protected LoginPage loginPage = new LoginPage();
-    protected RegisterPage registerPage = new RegisterPage();
-    protected MailPage mailPage = new MailPage();
+    HomePage homePage = new HomePage();
+    LoginPage loginPage = new LoginPage();
+    RegisterPage registerPage = new RegisterPage();
+    MailPage mailPage = new MailPage();
 
-    protected String username = "nhiagest@grr.la";
-    protected String password = "12345678";
-    protected String blankUsername = "";
-    protected String invalidPassword = "11111111";
-    protected String pid = "12345678";
+    String username = "nhiagest@grr.la";
+    String password = "12345678";
+    String blankUsername = "";
+    String invalidPassword = "11111111";
+    String pid = "12345678";
 
     User validUser = new User(username, password);
     User blankUser = new User(blankUsername, password);
@@ -32,7 +29,7 @@ public class LoginTest extends BaseTest {
     @Test(description = "User can log into Railway with valid username and password")
     public void LoginWithValidAccount(){
         DriverManagement.open();
-        homePage.gotoTab("Login");
+        homePage.openLoginTab();
         LoginPage loginPage = new LoginPage();
         loginPage.submitLoginForm(validUser);
 
@@ -44,7 +41,7 @@ public class LoginTest extends BaseTest {
     @Test(description = "User cannot login with blank Username textbox")
     public void LoginWithBlankUsername(){
         DriverManagement.open();
-        homePage.gotoTab("Login");
+        homePage.openLoginTab();
         loginPage.submitLoginForm(blankUser);
         String expectedMsg = "There was a problem with your login and/or errors exist in your form.";
         String actualMsg = loginPage.getErrorMsg();
@@ -55,7 +52,7 @@ public class LoginTest extends BaseTest {
     @Test(description = "User cannot log into Railway with invalid password")
     public void LoginWithInvalidPassword(){
         DriverManagement.open();
-        homePage.gotoTab("Login");
+        homePage.openLoginTab();
         loginPage.submitLoginForm(invalidUser);
         String actualMsg = loginPage.getErrorMsg();
         String expectedMsg = "There was a problem with your login and/or errors exist in your form.";
@@ -66,7 +63,7 @@ public class LoginTest extends BaseTest {
     @Test(description = "System shows message when user enters wrong password many times")
     public void LoginInSeveralTimes(){
         DriverManagement.open();
-        homePage.gotoTab("Login");
+        homePage.openLoginTab();
 
         loginPage.loginInSeveralTime(invalidUser, 4);
 
@@ -85,11 +82,11 @@ public class LoginTest extends BaseTest {
         driver.switchTo().newWindow(WindowType.TAB);
 
         DriverManagement.open();
-        homePage.gotoTab("Register");
+        homePage.openTab("Register");
         registerPage.fillRegisterForm(newUser);
         registerPage.clickBtnRegister();
 
-        registerPage.gotoTab("Login");
+        registerPage.openLoginTab();
         loginPage.submitLoginForm(newUser);
 
         String actualMsg = loginPage.getErrorMsg();

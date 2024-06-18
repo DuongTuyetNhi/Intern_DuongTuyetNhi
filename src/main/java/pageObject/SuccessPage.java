@@ -15,7 +15,7 @@ public class SuccessPage extends BasePage{
     }
 
     public boolean checkInforTicket(Ticket ticket){
-        By inforTicket = By.xpath(String.format(xpathInforTicket, ticket.getDepartFrom().getValueDepartFrom(), ticket.getArriveAt().getValueArriveAt(),
+        By inforTicket = By.xpath(String.format(xpathInforTicket, ticket.getDepartFrom().getValueLocation(), ticket.getArriveAt().getValueLocation(),
                 ticket.getSeatType().getValueSeatType(), ticket.getDepartDate(), ticket.getAmount().getValueAmount()));
         return driver.findElement(inforTicket).isDisplayed();
     }

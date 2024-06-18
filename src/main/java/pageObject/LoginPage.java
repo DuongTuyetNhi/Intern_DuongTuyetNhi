@@ -25,7 +25,7 @@ public class LoginPage extends BasePage{
     public void submitLoginForm(User user){
         enter(txtLoginUsername, user.getUsername());
         enter(txtLoginPassword, user.getPassword());
-        DriverManagement.scrollToFindElement("//input[@type='submit']");
+        DriverManagement.scrollToFindElement(btnLogin);
         click(btnLogin);
     }
 

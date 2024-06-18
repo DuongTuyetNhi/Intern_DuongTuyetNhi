@@ -1,6 +1,6 @@
 package enums;
 
-public enum ArriveAt {
+public enum Locations {
     SAI_GON("Sài Gòn"),
     PHAN_THIET("Phan Thiết"),
     NHA_TRANG("Nha Trang"),
@@ -8,12 +8,12 @@ public enum ArriveAt {
     HUE("Huế"),
     QUANG_NGAI("Quảng Ngãi");
 
-    private final String arriveAt;
+    private final String location;
 
-    ArriveAt(String arriveAt) {
-        this.arriveAt = arriveAt;
+    Locations(String location) {
+        this.location = location;
     }
-    public String getValueArriveAt(){
-        return arriveAt;
+    public String getValueLocation(){
+        return location;
     }
 }

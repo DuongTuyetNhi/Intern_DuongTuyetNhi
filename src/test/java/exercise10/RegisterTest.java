@@ -9,19 +9,15 @@ import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 import pageObject.*;
 
-
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-
 import static base.DriverManagement.driver;
 
 public class RegisterTest extends BaseTest {
-    protected HomePage homePage = new HomePage();
-    protected RegisterPage registerPage = new RegisterPage();
-    protected MailPage mailPage = new MailPage();
-    protected String username = "nhiagest@grr.la";
-    protected String password = "12345678";
-    protected String pid = "12345678";
+    HomePage homePage = new HomePage();
+    RegisterPage registerPage = new RegisterPage();
+    MailPage mailPage = new MailPage();
+    String username = "nhiagest@grr.la";
+    String password = "12345678";
+    String pid = "12345678";
     User oldAccountUser = new User(username, password, pid);
     String newEmail = "helloselenium@gmail.com";
     String blankPassword = "";
@@ -29,7 +25,7 @@ public class RegisterTest extends BaseTest {
     @Test(description = "User cannot create account with an already in use email")
     public void RegisterWithUsedEmail(){
         DriverManagement.open();
-        homePage.gotoTab("Register");
+        homePage.openTab("Register");
         registerPage.fillRegisterForm(oldAccountUser);
         registerPage.clickBtnRegister();
 
@@ -42,7 +38,7 @@ public class RegisterTest extends BaseTest {
     @Test(description = "User cannot create account while password and PID fields are empty")
     public void RegisterWithBlankFields(){
         DriverManagement.open();
-        homePage.gotoTab("Register");
+        homePage.openTab("Register");
         User newUser = new User(newEmail, blankPassword, "");
         registerPage.fillRegisterForm(newUser);
         registerPage.clickBtnRegister();
