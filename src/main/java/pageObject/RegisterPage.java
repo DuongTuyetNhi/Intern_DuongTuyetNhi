@@ -34,7 +34,7 @@ public class RegisterPage extends BasePage{
     }
 
     public void clickBtnRegister(){
-        DriverManagement.scrollToFindElement("//input[@type='submit']");
+        DriverManagement.scrollToFindElement(btnRegister);
         click(btnRegister);
     }
 

@@ -11,21 +11,21 @@ import static base.DriverManagement.driver;
 import static base.DriverManagement.switchToTab;
 
 public class ResetPasswordTest extends BaseTest {
-    protected HomePage homePage = new HomePage();
-    protected LoginPage loginPage = new LoginPage();
-    protected MailPage mailPage = new MailPage();
-    protected ForgotPasswordPage forgotPasswordPage = new ForgotPasswordPage();
-    protected String username = "nhiagest@grr.la";
-    protected String password = "12345678";
+    HomePage homePage = new HomePage();
+    LoginPage loginPage = new LoginPage();
+    MailPage mailPage = new MailPage();
+    ForgotPasswordPage forgotPasswordPage = new ForgotPasswordPage();
+    String username = "nhiagest@grr.la";
+    String password = "12345678";
     String[] str = username.split("@");
-    protected String mailName = str[0];
-    protected String domainName = str[1];
+    String mailName = str[0];
+    String domainName = str[1];
 
 
     @Test(description = "Reset password shows error if the new password is same as current")
     public void ResetPasswordSameOldPassword(){
         DriverManagement.open();
-        homePage.gotoTab("Login");
+        homePage.openLoginTab();
         loginPage.clickForgotPassword();
         String RailwayWindow = driver.getWindowHandle();
 
@@ -52,7 +52,7 @@ public class ResetPasswordTest extends BaseTest {
     @Test(description = "Reset password shows error if the new password and confirm password doesn't match")
     public void ResetPasswordDoesNotMatch(){
         DriverManagement.open();
-        homePage.gotoTab("Login");
+        homePage.openLoginTab();
         loginPage.clickForgotPassword();
         String RailwayWindow = driver.getWindowHandle();
 

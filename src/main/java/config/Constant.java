@@ -1,19 +1,17 @@
-package base;
-
-import org.openqa.selenium.WebDriver;
+package config;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 
-public class Constants {
+public class Constant {
     private static Properties properties;
     static {
         loadProperties();
     }
     private static void loadProperties() {
         properties = new Properties();
-        try (InputStream input = Constants.class.getClassLoader().getResourceAsStream("config.properties")) {
+        try (InputStream input = Constant.class.getClassLoader().getResourceAsStream("config.properties")) {
             if (input == null) {
                 throw new IOException("config.properties file not found.");
             }

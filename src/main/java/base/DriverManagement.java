@@ -4,16 +4,34 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
+import java.util.List;
 import java.util.Set;
 
-import static base.Constants.getProperty;
+import static config.Constant.getProperty;
 
 public class DriverManagement {
     public static WebDriver driver;
+    public static void initDriver() throws Exception {
+        String browser = getProperty("browser").toLowerCase();
+        switch (browser){
+            case "chrome":{
+                driver = new ChromeDriver();
+                break;
+            }
+            case "firefox":{
+                driver = new FirefoxDriver();
+                break;
+            }
+            default:
+                throw new Exception("Browser "+browser+" was not supported.");
+        }
+    }
     public static void open(){
         driver.get(getProperty("railway_url"));
     }
@@ -34,22 +52,22 @@ public class DriverManagement {
         return driver.findElement(element).getText();
     }
 
-    public static void waitElement(String xpath){
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(25));
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(String.format(xpath))));
+    public static void waitElement(By xpath, int timeout){
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(timeout));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(xpath));
     }
 
-    public static void scrollToFindElement(String xpath){
+    public static void scrollToFindElement(By xpath){
         JavascriptExecutor js = (JavascriptExecutor) driver;
-        WebElement Element = driver.findElement(By.xpath(xpath));
+        WebElement Element = driver.findElement(xpath);
         js.executeScript("arguments[0].scrollIntoView();", Element);
     }
 
-    public static void switchToTab(String tab1, String tab2){
+    public static void switchToTab(String mailTab, String railwayTab){
         Set<String> allTabs = driver.getWindowHandles();
 
         for (String tab : allTabs) {
-            if (!tab.equals(tab1) && !tab.equals(tab2)) {
+            if (!tab.equals(mailTab) && !tab.equals(railwayTab)) {
                 driver.switchTo().window(tab);
                 break;
             }

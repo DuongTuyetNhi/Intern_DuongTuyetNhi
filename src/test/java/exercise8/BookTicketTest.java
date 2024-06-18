@@ -1,16 +1,5 @@
 package exercise8;
 
-import base.Constants;
-import org.openqa.selenium.WindowType;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.testng.Assert;
-import org.testng.annotations.AfterMethod;
-import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.Test;
-import pageObject.*;
-
-import static base.DriverManagement.driver;
-
 public class BookTicketTest {
 
 //    private String emailLogin;

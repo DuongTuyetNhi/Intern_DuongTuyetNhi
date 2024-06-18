@@ -1,6 +1,5 @@
 package pageObject;
 
-import base.DriverManagement;
 import models.Ticket;
 import org.openqa.selenium.By;
 
@@ -16,16 +15,16 @@ public class BookTicketPage extends BasePage{
     }
 
     public void bookTicket(Ticket ticket){
-        selectInfor("DepartStation", ticket.getDepartFrom().getValueDepartFrom());
+        selectInfor("DepartStation", ticket.getDepartFrom().getValueLocation());
         selectInfor("Date", ticket.getDepartDate());
         selectInfor("SeatType", ticket.getSeatType().getValueSeatType());
         selectInfor("TicketAmount", ticket.getAmount().getValueAmount());
-        selectInfor("ArriveStation", ticket.getArriveAt().getValueArriveAt());
+        selectInfor("ArriveStation", ticket.getArriveAt().getValueLocation());
 
     }
 
     public void clickBookTicketButton(){
-        DriverManagement.scrollToFindElement("//form//input[@type = 'submit']");
+        scrollToFindElement(btnBookTicket);
         click(btnBookTicket);
     }
 
