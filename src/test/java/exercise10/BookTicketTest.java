@@ -25,7 +25,7 @@ public class BookTicketTest extends BaseTest {
 
     @Test(description = "User can book 1 ticket at a time")
     public void BookTicket(){
-        Ticket ticket1 = new Ticket(getDateAdd(12), Locations.NHA_TRANG, Locations.HUE, SeatType.SBC, Amount.TWO);
+        Ticket ticket1 = new Ticket(getDateAdd(12), Locations.NHA_TRANG, Locations.HUE, SeatType.SBC, "2");
 
         DriverManagement.open();
         homePage.openLoginTab();
@@ -43,7 +43,7 @@ public class BookTicketTest extends BaseTest {
 
     @Test(description = "User can book many tickets at a time")
     public void BookManyTicket(){
-        Ticket ticket2 = new Ticket(getDateAdd(25), Locations.NHA_TRANG, Locations.SAI_GON, SeatType.SSC, Amount.FIVE);
+        Ticket ticket2 = new Ticket(getDateAdd(25), Locations.NHA_TRANG, Locations.SAI_GON, SeatType.SSC, "5");
         DriverManagement.open();
         homePage.openLoginTab();
         loginPage.submitLoginForm(validUser);
@@ -101,7 +101,7 @@ public class BookTicketTest extends BaseTest {
 
     @Test(description = "User can book ticket from Timetable")
     public void BookTicketFromTimeTable(){
-        Ticket ticket4 = new Ticket(getDateAdd(10), Locations.QUANG_NGAI, Locations.HUE, SeatType.HS, Amount.FIVE);
+        Ticket ticket4 = new Ticket(getDateAdd(10), Locations.QUANG_NGAI, Locations.HUE, SeatType.HS, "5");
 
         DriverManagement.open();
         homePage.openLoginTab();

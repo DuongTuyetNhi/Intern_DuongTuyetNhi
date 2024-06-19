@@ -18,7 +18,7 @@ public class BookTicketPage extends BasePage{
         selectInfor("DepartStation", ticket.getDepartFrom().getValueLocation());
         selectInfor("Date", ticket.getDepartDate());
         selectInfor("SeatType", ticket.getSeatType().getValueSeatType());
-        selectInfor("TicketAmount", ticket.getAmount().getValueAmount());
+        selectInfor("TicketAmount", ticket.getAmount());
         selectInfor("ArriveStation", ticket.getArriveAt().getValueLocation());
 
     }

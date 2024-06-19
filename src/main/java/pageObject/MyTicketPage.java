@@ -16,7 +16,7 @@ public class MyTicketPage extends BasePage{
 
     public void cancelTicket(Ticket ticket) {
         By ticketLocator = By.xpath(String.format(xpathTicket, ticket.getDepartFrom().getValueLocation(), ticket.getArriveAt().getValueLocation(),
-                ticket.getSeatType().getValueSeatType(), ticket.getDepartDate(), ticket.getAmount().getValueAmount()));
+                ticket.getSeatType().getValueSeatType(), ticket.getDepartDate(), ticket.getAmount()));
         click(ticketLocator);
     }
 
@@ -26,7 +26,7 @@ public class MyTicketPage extends BasePage{
 
     public boolean checkTicketDisappear(Ticket ticket) {
         String ticketLocator = String.format(xpathTicket, ticket.getDepartFrom().getValueLocation(), ticket.getArriveAt().getValueLocation(),
-                ticket.getSeatType().getValueSeatType(), ticket.getDepartDate(), ticket.getAmount().getValueAmount());
+                ticket.getSeatType().getValueSeatType(), ticket.getDepartDate(), ticket.getAmount());
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
         return wait.until(ExpectedConditions.invisibilityOfElementLocated(By.xpath(ticketLocator)));
     }

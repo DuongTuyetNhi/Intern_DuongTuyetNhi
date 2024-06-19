@@ -16,6 +16,7 @@ import java.util.Set;
 import static config.Constant.getProperty;
 
 public class DriverManagement {
+
     public static WebDriver driver;
     public static void initDriver() throws Exception {
         String browser = getProperty("browser").toLowerCase();

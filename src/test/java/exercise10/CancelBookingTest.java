@@ -28,7 +28,7 @@ public class CancelBookingTest extends BaseTest {
     String departDate = getDateAdd(5);
 
     User validUser = new User(username, password);
-    Ticket ticket = new Ticket(departDate, Locations.SAI_GON, Locations.PHAN_THIET, SeatType.HB, Amount.TWO);
+    Ticket ticket = new Ticket(departDate, Locations.SAI_GON, Locations.PHAN_THIET, SeatType.HB, "2");
     @Test(description = "User can cancel a ticket")
     public void CancelTicket(){
         DriverManagement.open();

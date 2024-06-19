@@ -7,9 +7,9 @@ public class Ticket {
     Locations departFrom;
     Locations arriveAt;
     SeatType seatType;
-    Amount amount;
+    String amount;
 
-    public Ticket(String departDate, Locations departFrom, Locations arriveAt, SeatType seatType, Amount amount) {
+    public Ticket(String departDate, Locations departFrom, Locations arriveAt, SeatType seatType, String amount) {
         this.departDate = departDate;
         this.departFrom = departFrom;
         this.arriveAt = arriveAt;
@@ -33,7 +33,7 @@ public class Ticket {
         return seatType;
     }
 
-    public Amount getAmount() {
+    public String getAmount() {
         return amount;
     }
 }
