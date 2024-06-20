@@ -6,7 +6,7 @@ import static base.DriverManagement.driver;
 import static base.DriverManagement.getText;
 
 public class SuccessPage extends BasePage{
-    private String xpathInforTicket = "//table//tr[td[text()='%s' and following-sibling::td[text()='%s' and following-sibling::td[text()='%s' and following-sibling::td[text()='%s' and following-sibling::td[text()='%s']]]]]]";
+    private String rowTicketInfo = "//table//tr[td[text()='%s' and following-sibling::td[text()='%s' and following-sibling::td[text()='%s' and following-sibling::td[text()='%s' and following-sibling::td[text()='%s']]]]]]";
 
     public String getSuccessfulMsg(){
         By msgSuccessful = By.xpath("//*[@id='content']/h1");
@@ -14,7 +14,7 @@ public class SuccessPage extends BasePage{
     }
 
     public boolean isCorrectInforTicket(Ticket ticket){
-        By inforTicket = By.xpath(String.format(xpathInforTicket, ticket.getDepartFrom().getValueLocation(), ticket.getArriveAt().getValueLocation(),
+        By inforTicket = By.xpath(String.format(rowTicketInfo, ticket.getDepartFrom().getValueLocation(), ticket.getArriveAt().getValueLocation(),
                 ticket.getSeatType().getValueSeatType(), ticket.getDepartDate(), ticket.getAmount()));
         return driver.findElement(inforTicket).isDisplayed();
     }

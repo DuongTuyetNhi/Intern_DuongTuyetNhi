@@ -9,12 +9,12 @@ import static base.DriverManagement.click;
 import static base.DriverManagement.driver;
 
 public class MyTicketPage extends BasePage{
-    private String xpathTicket = "//table[@class='MyTable']//tr[td[text()='%s' and following-sibling::td[text()='%s'" +
+    private String rowTicketInfo = "//table[@class='MyTable']//tr[td[text()='%s' and following-sibling::td[text()='%s'" +
             " and following-sibling::td[text()='%s' and following-sibling::td[text()='%s' " +
             "and following-sibling::td[text()='%s']]]]]]//input[contains(@onclick, 'Delete')]";
 
     public void cancelTicket(Ticket ticket) {
-        By ticketLocator = By.xpath(String.format(xpathTicket, ticket.getDepartFrom().getValueLocation(), ticket.getArriveAt().getValueLocation(),
+        By ticketLocator = By.xpath(String.format(rowTicketInfo, ticket.getDepartFrom().getValueLocation(), ticket.getArriveAt().getValueLocation(),
                 ticket.getSeatType().getValueSeatType(), ticket.getDepartDate(), ticket.getAmount()));
         click(ticketLocator);
     }
@@ -24,7 +24,7 @@ public class MyTicketPage extends BasePage{
     }
 
     public boolean isTicketDisappeared(Ticket ticket) {
-        String ticketLocator = String.format(xpathTicket, ticket.getDepartFrom().getValueLocation(), ticket.getArriveAt().getValueLocation(),
+        String ticketLocator = String.format(rowTicketInfo, ticket.getDepartFrom().getValueLocation(), ticket.getArriveAt().getValueLocation(),
                 ticket.getSeatType().getValueSeatType(), ticket.getDepartDate(), ticket.getAmount());
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
         return wait.until(ExpectedConditions.invisibilityOfElementLocated(By.xpath(ticketLocator)));

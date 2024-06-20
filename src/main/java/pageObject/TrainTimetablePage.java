@@ -7,11 +7,11 @@ import static base.DriverManagement.click;
 
 public class TrainTimetablePage extends BasePage{
 
-    private String functionLink = "//tr[td[text()='%s' and following-sibling::td[text()='%s']]]//a[contains(@href, '%s')]";
+    private String lnkFunction = "//tr[td[text()='%s' and following-sibling::td[text()='%s']]]//a[contains(@href, '%s')]";
 
 
     public void selectFunction(Locations departFrom, Locations arriveAt, String function){
-        By linkFunction = By.xpath(String.format(functionLink, departFrom.getValueLocation(), arriveAt.getValueLocation(), function));
+        By linkFunction = By.xpath(String.format(lnkFunction, departFrom.getValueLocation(), arriveAt.getValueLocation(), function));
         DriverManagement.scrollToView(linkFunction);
         click(linkFunction);
     }

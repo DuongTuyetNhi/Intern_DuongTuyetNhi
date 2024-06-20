@@ -9,11 +9,11 @@ import static base.DriverManagement.*;
 
 public class LoginPage extends BasePage{
 
-    private By txtLoginUsername = By.id("username");
-    private By txtLoginPassword = By.id("password");
+    private By txtUsername = By.id("username");
+    private By txtPassword = By.id("password");
     private By btnLogin = By.xpath("//input[@type='submit']");
     private By msgError = By.xpath("//*[@id='content']/p[@class='message error LoginForm']");
-    private By linkForgotPassword = By.xpath("//*[@id='content']//a[contains(@href,'ForgotPassword')]");
+    private By lnkForgotPassword = By.xpath("//*[@id='content']//a[contains(@href,'ForgotPassword')]");
     private By txtNewPassword = By.id("newPassword");
     private By txtConfirmPassword = By.id("confirmPassword");
     private By txtPasswordResetToken = By.id("resetToken");
@@ -22,8 +22,8 @@ public class LoginPage extends BasePage{
     private By msgConfirmPassword = By.xpath("//*[@id='content']//label[@class='validation-error' and @for='confirmPassword']");
 
     public void submitLoginForm(User user){
-        enter(txtLoginUsername, user.getUsername());
-        enter(txtLoginPassword, user.getPassword());
+        enter(txtUsername, user.getUsername());
+        enter(txtPassword, user.getPassword());
         DriverManagement.scrollToView(btnLogin);
         click(btnLogin);
     }
@@ -39,7 +39,7 @@ public class LoginPage extends BasePage{
     }
 
     public void clickForgotPassword(){
-        click(linkForgotPassword);
+        click(lnkForgotPassword);
     }
     public void fillResetPasswordForm(String newPassword, String confirmPassword){
         enter(txtNewPassword, newPassword);

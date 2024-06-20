@@ -6,7 +6,7 @@ import org.openqa.selenium.By;
 import static base.DriverManagement.*;
 
 public class RegisterPage extends BasePage {
-    private String validationError = "//*[@id='RegisterForm']//label[@for='%s' and @class='validation-error']";
+    private String lblValidationError = "//*[@id='RegisterForm']//label[@for='%s' and @class='validation-error']";
     private By txtEmail = By.id("email");
     private By txtPassword = By.id("password");
     private By txtConfirmPassword = By.id("confirmPassword");
@@ -23,16 +23,6 @@ public class RegisterPage extends BasePage {
         enter(txtPID, user.getPid());
     }
 
-    public String getUsername() {
-        String txtUsernameLogin = driver.findElement(txtEmail).getAttribute("value");
-        return txtUsernameLogin;
-    }
-
-    public String getPassword() {
-        String txtPasswordLogin = driver.findElement(txtPassword).getAttribute("value");
-        return txtPasswordLogin;
-    }
-
     public void clickBtnRegister() {
         DriverManagement.scrollToView(btnRegister);
         click(btnRegister);
@@ -44,12 +34,12 @@ public class RegisterPage extends BasePage {
     }
 
     public String getValidationPasswordError() {
-        By passwordError = By.xpath(String.format(validationError, "password"));
+        By passwordError = By.xpath(String.format(lblValidationError, "password"));
         return getText(passwordError);
     }
 
     public String getValidationPIDError() {
-        By pidError = By.xpath(String.format(validationError, "pid"));
+        By pidError = By.xpath(String.format(lblValidationError, "pid"));
         return getText(pidError);
     }
 
