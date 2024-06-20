@@ -10,10 +10,9 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
-import java.util.List;
 import java.util.Set;
 
-import static config.Constant.getProperty;
+import static config.ConfigReader.getProperty;
 
 public class DriverManagement {
 
@@ -33,7 +32,7 @@ public class DriverManagement {
                 throw new Exception("Browser "+browser+" was not supported.");
         }
     }
-    public static void open(){
+    public static void openRailwayPage(){
         driver.get(getProperty("railway_url"));
     }
 
@@ -53,12 +52,12 @@ public class DriverManagement {
         return driver.findElement(element).getText();
     }
 
-    public static void waitElement(By xpath, int timeout){
+    public static void waitForElementVisible(By xpath, int timeout){
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(timeout));
         wait.until(ExpectedConditions.visibilityOfElementLocated(xpath));
     }
 
-    public static void scrollToFindElement(By xpath){
+    public static void scrollToView(By xpath){
         JavascriptExecutor js = (JavascriptExecutor) driver;
         WebElement Element = driver.findElement(xpath);
         js.executeScript("arguments[0].scrollIntoView();", Element);

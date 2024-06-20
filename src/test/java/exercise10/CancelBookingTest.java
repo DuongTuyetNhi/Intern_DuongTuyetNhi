@@ -8,8 +8,7 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 import pageObject.*;
 
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
+import static base.DateUtils.getDateAdd;
 
 public class CancelBookingTest extends BaseTest {
     HomePage homePage = new HomePage();
@@ -18,20 +17,15 @@ public class CancelBookingTest extends BaseTest {
     SuccessPage successPage = new SuccessPage();
     MyTicketPage myTicketPage = new MyTicketPage();
 
-    DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("M/d/yyyy");
-    String getDateAdd(int number){
-        return dateTimeFormatter.format((LocalDate.now()).plusDays(number));
-    }
-
     String username = "nhiagest@grr.la";
     String password = "12345678";
-    String departDate = getDateAdd(5);
+    String departDate = getDateAdd(25);
 
     User validUser = new User(username, password);
     Ticket ticket = new Ticket(departDate, Locations.SAI_GON, Locations.PHAN_THIET, SeatType.HB, "2");
     @Test(description = "User can cancel a ticket")
     public void CancelTicket(){
-        DriverManagement.open();
+        DriverManagement.openRailwayPage();
         homePage.openLoginTab();
         loginPage.submitLoginForm(validUser);
 
@@ -42,7 +36,7 @@ public class CancelBookingTest extends BaseTest {
         successPage.openTab("My ticket");
         myTicketPage.cancelTicket(ticket);
         myTicketPage.confirmCancel();
-        Assert.assertTrue(myTicketPage.checkTicketDisappear(ticket),"The ticket does not disappear.");
+        Assert.assertTrue(myTicketPage.isTicketDisappeared(ticket),"The ticket does not disappear.");
 
     }
 }

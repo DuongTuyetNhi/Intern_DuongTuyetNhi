@@ -2,7 +2,6 @@ package pageObject;
 
 import base.DriverManagement;
 import org.openqa.selenium.By;
-
 import static base.DriverManagement.*;
 
 public class MailPage extends BasePage{
@@ -24,10 +23,10 @@ public class MailPage extends BasePage{
     }
 
     public void confirmAccount(){
-        DriverManagement.waitElement(txtEmailConfirm, 25);
+        DriverManagement.waitForElementVisible(txtEmailConfirm, 25);
         click(txtEmailConfirm);
 
-        DriverManagement.waitElement(txtLinkConfirm, 25);
+        DriverManagement.waitForElementVisible(txtLinkConfirm, 25);
         click(txtLinkConfirm);
     }
 
@@ -38,10 +37,10 @@ public class MailPage extends BasePage{
         enter(sltDomainName, domainName);
     }
     public void resetPassword(){
-        DriverManagement.waitElement(txtEmailReset, 25);
+        DriverManagement.waitForElementVisible(txtEmailReset, 25);
         click(txtEmailReset);
 
-        DriverManagement.waitElement(txtLinkReset, 25);
+        DriverManagement.waitForElementVisible(txtLinkReset, 25);
         click(txtLinkReset);
     }
 }

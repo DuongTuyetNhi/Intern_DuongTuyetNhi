@@ -2,7 +2,6 @@ package pageObject;
 
 import models.Ticket;
 import org.openqa.selenium.By;
-
 import static base.DriverManagement.*;
 
 public class BookTicketPage extends BasePage{
@@ -24,7 +23,7 @@ public class BookTicketPage extends BasePage{
     }
 
     public void clickBookTicketButton(){
-        scrollToFindElement(btnBookTicket);
+        scrollToView(btnBookTicket);
         click(btnBookTicket);
     }
 

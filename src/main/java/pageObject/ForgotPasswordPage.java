@@ -1,7 +1,6 @@
 package pageObject;
 
 import org.openqa.selenium.By;
-
 import static base.DriverManagement.*;
 
 public class ForgotPasswordPage extends BasePage{

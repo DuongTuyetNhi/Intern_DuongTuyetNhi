@@ -1,7 +1,6 @@
 package pageObject;
 
 import org.openqa.selenium.By;
-
 import static base.DriverManagement.*;
 
 public class TicketPricePage extends BasePage{
@@ -14,7 +13,7 @@ public class TicketPricePage extends BasePage{
         By txtSeatType = By.xpath(String.format(typeSeat, seatType));
         click(txtSeatType);
     }
-    public boolean checkTitleExist(){
+    public boolean doesTitleExist(){
         return driver.findElement(xpathTitle).isDisplayed();
     }
 

@@ -16,13 +16,13 @@ public class Logout extends BaseTest {
     public void LogOut(){
 
         HomePage homePage = new HomePage();
-        DriverManagement.open();
+        DriverManagement.openRailwayPage();
         homePage.openLoginTab();
         LoginPage loginPage = new LoginPage();
         loginPage.submitLoginForm(validUser);
         homePage.openTab("Log out");
 
-        Assert.assertTrue(homePage.checkHomepageIsDisplay());
+        Assert.assertTrue(homePage.isHomePageDisplayed());
         Assert.assertFalse(homePage.isLogoutTabPresent(), "Logout tab is exist");
 
     }

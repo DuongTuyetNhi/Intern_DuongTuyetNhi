@@ -1,7 +1,6 @@
 package pageObject;
 
 import org.openqa.selenium.By;
-
 import static base.DriverManagement.click;
 import static base.DriverManagement.driver;
 
@@ -14,7 +13,7 @@ public class HomePage extends BasePage{
         return driver.findElement(msgWelcome).getText();
     }
 
-    public boolean checkHomepageIsDisplay(){
+    public boolean isHomePageDisplayed(){
         String welcomeTitle = "Welcome to Safe Railway";
         By welcome = By.xpath(String.format(xpathWelcomeMsg, welcomeTitle));
         return driver.findElement(welcome).isDisplayed();

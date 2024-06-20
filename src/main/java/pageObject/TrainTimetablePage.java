@@ -1,8 +1,8 @@
 package pageObject;
 
 import base.DriverManagement;
+import enums.Locations;
 import org.openqa.selenium.By;
-
 import static base.DriverManagement.click;
 
 public class TrainTimetablePage extends BasePage{
@@ -10,9 +10,9 @@ public class TrainTimetablePage extends BasePage{
     private String functionLink = "//tr[td[text()='%s' and following-sibling::td[text()='%s']]]//a[contains(@href, '%s')]";
 
 
-    public void selectFunction(String departFrom, String arriveAt, String function){
-        By linkFunction = By.xpath(String.format(functionLink, departFrom, arriveAt, function));
-        DriverManagement.scrollToFindElement(linkFunction);
+    public void selectFunction(Locations departFrom, Locations arriveAt, String function){
+        By linkFunction = By.xpath(String.format(functionLink, departFrom.getValueLocation(), arriveAt.getValueLocation(), function));
+        DriverManagement.scrollToView(linkFunction);
         click(linkFunction);
     }
 

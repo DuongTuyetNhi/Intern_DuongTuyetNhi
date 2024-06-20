@@ -5,7 +5,6 @@ import models.User;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import java.util.List;
-
 import static base.DriverManagement.*;
 
 public class LoginPage extends BasePage{
@@ -25,7 +24,7 @@ public class LoginPage extends BasePage{
     public void submitLoginForm(User user){
         enter(txtLoginUsername, user.getUsername());
         enter(txtLoginPassword, user.getPassword());
-        DriverManagement.scrollToFindElement(btnLogin);
+        DriverManagement.scrollToView(btnLogin);
         click(btnLogin);
     }
 
@@ -49,7 +48,7 @@ public class LoginPage extends BasePage{
     public void clickResetPasswordBtn(){
         click(btnResetPassword);
     }
-    public boolean checkTokenIsDisplay(){
+    public boolean isTokenDisplayed(){
         List<WebElement> token = driver.findElements(txtPasswordResetToken);
         return !token.isEmpty();
     }

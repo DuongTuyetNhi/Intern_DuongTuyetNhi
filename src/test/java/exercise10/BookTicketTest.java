@@ -27,7 +27,7 @@ public class BookTicketTest extends BaseTest {
     public void BookTicket(){
         Ticket ticket1 = new Ticket(getDateAdd(12), Locations.NHA_TRANG, Locations.HUE, SeatType.SBC, "2");
 
-        DriverManagement.open();
+        DriverManagement.openRailwayPage();
         homePage.openLoginTab();
         loginPage.submitLoginForm(validUser);
 
@@ -38,13 +38,13 @@ public class BookTicketTest extends BaseTest {
         String actualMsg = successPage.getSuccessfulMsg();
         String expectedMsg = "Ticket booked successfully!";
         Assert.assertEquals(actualMsg, expectedMsg, "The actual message is not the same as expected.");
-        Assert.assertTrue(successPage.checkInforTicket(ticket1));
+        Assert.assertTrue(successPage.isCorrectInforTicket(ticket1));
     }
 
     @Test(description = "User can book many tickets at a time")
     public void BookManyTicket(){
         Ticket ticket2 = new Ticket(getDateAdd(25), Locations.NHA_TRANG, Locations.SAI_GON, SeatType.SSC, "5");
-        DriverManagement.open();
+        DriverManagement.openRailwayPage();
         homePage.openLoginTab();
         loginPage.submitLoginForm(validUser);
 
@@ -55,21 +55,21 @@ public class BookTicketTest extends BaseTest {
         String actualMsg = successPage.getSuccessfulMsg();
         String expectedMsg = "Ticket booked successfully!";
         Assert.assertEquals(actualMsg, expectedMsg, "Message display is not same");
-        Assert.assertTrue(successPage.checkInforTicket(ticket2));
+        Assert.assertTrue(successPage.isCorrectInforTicket(ticket2));
     }
 
     @Test(description = "User can check price of ticket from Timetable")
     public void CheckPriceTicket(){
-        DriverManagement.open();
+        DriverManagement.openRailwayPage();
         homePage.openLoginTab();
         loginPage.submitLoginForm(validUser);
 
         homePage.openTab("Timetable");
-        trainTimetablePage.selectFunction("Đà Nẵng", "Sài Gòn", "TicketPricePage");
+        trainTimetablePage.selectFunction(Locations.DA_NANG, Locations.SAI_GON, "TicketPricePage");
 
         SoftAssert softAssert = new SoftAssert();
 
-        softAssert.assertTrue(ticketPricePage.checkTitleExist());
+        softAssert.assertTrue(ticketPricePage.doesTitleExist());
 
         String actualMsg = ticketPricePage.getTicketInfor();
         String expectedMsg = "Ticket price from Đà Nẵng to Sài Gòn";
@@ -103,12 +103,12 @@ public class BookTicketTest extends BaseTest {
     public void BookTicketFromTimeTable(){
         Ticket ticket4 = new Ticket(getDateAdd(10), Locations.QUANG_NGAI, Locations.HUE, SeatType.HS, "5");
 
-        DriverManagement.open();
+        DriverManagement.openRailwayPage();
         homePage.openLoginTab();
         loginPage.submitLoginForm(validUser);
 
         homePage.openTab("Timetable");
-        trainTimetablePage.selectFunction("Quảng Ngãi", "Huế", "BookTicketPage");
+        trainTimetablePage.selectFunction(Locations.QUANG_NGAI, Locations.HUE, "BookTicketPage");
 
         String dateNext10 = getDateAdd(10);
         bookTicketPage.selectInfor("Date",dateNext10);
@@ -118,6 +118,6 @@ public class BookTicketTest extends BaseTest {
         String actualMsg = successPage.getSuccessfulMsg();
         String expectedMsg = "Ticket booked successfully!";
         Assert.assertEquals(actualMsg,expectedMsg,"Fail");
-        Assert.assertTrue(successPage.checkInforTicket(ticket4));
+        Assert.assertTrue(successPage.isCorrectInforTicket(ticket4));
     }
 }

@@ -5,7 +5,6 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import java.time.Duration;
-
 import static base.DriverManagement.click;
 import static base.DriverManagement.driver;
 
@@ -24,7 +23,7 @@ public class MyTicketPage extends BasePage{
         driver.switchTo().alert().accept();
     }
 
-    public boolean checkTicketDisappear(Ticket ticket) {
+    public boolean isTicketDisappeared(Ticket ticket) {
         String ticketLocator = String.format(xpathTicket, ticket.getDepartFrom().getValueLocation(), ticket.getArriveAt().getValueLocation(),
                 ticket.getSeatType().getValueSeatType(), ticket.getDepartDate(), ticket.getAmount());
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));

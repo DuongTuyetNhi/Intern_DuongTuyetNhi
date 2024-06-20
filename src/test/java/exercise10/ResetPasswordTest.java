@@ -24,7 +24,7 @@ public class ResetPasswordTest extends BaseTest {
 
     @Test(description = "Reset password shows error if the new password is same as current")
     public void ResetPasswordSameOldPassword(){
-        DriverManagement.open();
+        DriverManagement.openRailwayPage();
         homePage.openLoginTab();
         loginPage.clickForgotPassword();
         String RailwayWindow = driver.getWindowHandle();
@@ -40,7 +40,7 @@ public class ResetPasswordTest extends BaseTest {
 
         DriverManagement.switchToTab(MailWindow, RailwayWindow);
 
-        Assert.assertTrue(loginPage.checkTokenIsDisplay());
+        Assert.assertTrue(loginPage.isTokenDisplayed());
         loginPage.fillResetPasswordForm(password, password);
         loginPage.clickResetPasswordBtn();
 
@@ -51,7 +51,7 @@ public class ResetPasswordTest extends BaseTest {
 
     @Test(description = "Reset password shows error if the new password and confirm password doesn't match")
     public void ResetPasswordDoesNotMatch(){
-        DriverManagement.open();
+        DriverManagement.openRailwayPage();
         homePage.openLoginTab();
         loginPage.clickForgotPassword();
         String RailwayWindow = driver.getWindowHandle();
@@ -67,7 +67,7 @@ public class ResetPasswordTest extends BaseTest {
 
         switchToTab(MailWindow, RailwayWindow);
 
-        Assert.assertTrue(loginPage.checkTokenIsDisplay());
+        Assert.assertTrue(loginPage.isTokenDisplayed());
         loginPage.fillResetPasswordForm(password, "11111111");
         loginPage.clickResetPasswordBtn();
 

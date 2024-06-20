@@ -28,7 +28,7 @@ public class LoginTest extends BaseTest {
 
     @Test(description = "User can log into Railway with valid username and password")
     public void LoginWithValidAccount(){
-        DriverManagement.open();
+        DriverManagement.openRailwayPage();
         homePage.openLoginTab();
         LoginPage loginPage = new LoginPage();
         loginPage.submitLoginForm(validUser);
@@ -40,7 +40,7 @@ public class LoginTest extends BaseTest {
 
     @Test(description = "User cannot login with blank Username textbox")
     public void LoginWithBlankUsername(){
-        DriverManagement.open();
+        DriverManagement.openRailwayPage();
         homePage.openLoginTab();
         loginPage.submitLoginForm(blankUser);
         String expectedMsg = "There was a problem with your login and/or errors exist in your form.";
@@ -51,7 +51,7 @@ public class LoginTest extends BaseTest {
 
     @Test(description = "User cannot log into Railway with invalid password")
     public void LoginWithInvalidPassword(){
-        DriverManagement.open();
+        DriverManagement.openRailwayPage();
         homePage.openLoginTab();
         loginPage.submitLoginForm(invalidUser);
         String actualMsg = loginPage.getErrorMsg();
@@ -62,7 +62,7 @@ public class LoginTest extends BaseTest {
 
     @Test(description = "System shows message when user enters wrong password many times")
     public void LoginInSeveralTimes(){
-        DriverManagement.open();
+        DriverManagement.openRailwayPage();
         homePage.openLoginTab();
 
         loginPage.loginInSeveralTime(invalidUser, 4);
@@ -81,7 +81,7 @@ public class LoginTest extends BaseTest {
 
         driver.switchTo().newWindow(WindowType.TAB);
 
-        DriverManagement.open();
+        DriverManagement.openRailwayPage();
         homePage.openTab("Register");
         registerPage.fillRegisterForm(newUser);
         registerPage.clickBtnRegister();

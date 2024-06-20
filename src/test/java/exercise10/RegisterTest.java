@@ -24,7 +24,7 @@ public class RegisterTest extends BaseTest {
 
     @Test(description = "User cannot create account with an already in use email")
     public void RegisterWithUsedEmail(){
-        DriverManagement.open();
+        DriverManagement.openRailwayPage();
         homePage.openTab("Register");
         registerPage.fillRegisterForm(oldAccountUser);
         registerPage.clickBtnRegister();
@@ -37,7 +37,7 @@ public class RegisterTest extends BaseTest {
 
     @Test(description = "User cannot create account while password and PID fields are empty")
     public void RegisterWithBlankFields(){
-        DriverManagement.open();
+        DriverManagement.openRailwayPage();
         homePage.openTab("Register");
         User newUser = new User(newEmail, blankPassword, "");
         registerPage.fillRegisterForm(newUser);
@@ -68,14 +68,14 @@ public class RegisterTest extends BaseTest {
         String MailWindow = driver.getWindowHandle();
         driver.switchTo().newWindow(WindowType.TAB);
 
-        DriverManagement.open();
+        DriverManagement.openRailwayPage();
         homePage.clickCreateAnAccountLink();
 
         String RailwayWindow = driver.getWindowHandle();
 
         registerPage.fillRegisterForm(newAccountUser);
         registerPage.clickBtnRegister();
-        Assert.assertTrue(registerPage.checkMessageDisplay());
+        Assert.assertTrue(registerPage.isMessageDisplayed());
 
         driver.switchTo().window(MailWindow);
         driver.navigate().refresh();
@@ -84,6 +84,6 @@ public class RegisterTest extends BaseTest {
 
         DriverManagement.switchToTab(MailWindow, RailwayWindow);
 
-        Assert.assertTrue(registerPage.checkMessageConfirmDisplay());
+        Assert.assertTrue(registerPage.isConfirmMessageDisplayed());
     }
 }
