@@ -2,18 +2,30 @@
 <suite name="Railway" verbose="1" >
 <!--    <test name="BookTicket">-->
 <!--        <classes>-->
-<!--            <class name="exercise8.BookTicketTest"/>-->
+<!--            <class name="exercise10.BookTicketTest"/>-->
 <!--        </classes>-->
 <!--    </test>-->
 
-    <test name="BookTicket" preserve-order="false">
-        <classes>
-            <class name="exercise8.BookTicketTest">
-                <methods>
-                    <include name="TC02"/>
-<!--                    <include name="TC01"/>-->
-                </methods>
-            </class>
-        </classes>
-    </test>
+<!--    <test name="BookTicket" preserve-order="false">-->
+<!--        <classes>-->
+<!--            <class name="exercise8.BookTicketTest">-->
+<!--                <methods>-->
+<!--                    <include name="TC02"/>-->
+<!--&lt;!&ndash;                    <include name="TC01"/>&ndash;&gt;-->
+<!--                </methods>-->
+<!--            </class>-->
+<!--        </classes>-->
+<!--    </test>-->
+
+        <test name="Regression class">
+            <classes>
+                <class name="exercise10.LoginTest"/>
+            </classes>
+        </test>
+
+<!--        <test name="Regression package">-->
+<!--            <packages>-->
+<!--                <package name="exercise10"/>-->
+<!--            </packages>-->
+<!--        </test>-->
 </suite>
